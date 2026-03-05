@@ -738,7 +738,7 @@ var tCR=CA.reduce(function(a,c){return a+c.r;},0);
 new Chart(document.getElementById('chCat'), {
   type:'doughnut',
   data:{labels:CA.map(function(c){return c.n;}),datasets:[{data:CA.map(function(c){return c.r;}),backgroundColor:['#2563eb','#059669','#7c3aed','#d97706','#0891b2','#dc2626','#db2777','#6b7280','#f59e0b','#a3a3a3'],borderWidth:0}]},
-  options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{padding:6,boxWidth:8,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw)+' ('+(c.raw/tCR*100).toFixed(1)+'%)';}}}}}}
+  options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{padding:6,boxWidth:8,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw)+' ('+(c.raw/tCR*100).toFixed(1)+'%)';}}}}}
 });
 CA.forEach(function(c) {
   document.getElementById('tCatB').innerHTML +=
@@ -792,15 +792,7 @@ D.google_campaigns.map(function(g){return {c:g.campaign,s:g.spend,cv:g.conversio
 });
 
 // ── PAID SPEND WEEKLY TREND ────────────────────────────────────────────────
-var PST = [
-  {w:'WK02',m:9134, g:9565, mr:4.02,mp:454},
-  {w:'WK03',m:8450, g:15646,mr:4.24,mp:407},
-  {w:'WK04',m:8508, g:17003,mr:4.50,mp:381},
-  {w:'WK05',m:5913, g:14942,mr:4.67,mp:313},
-  {w:'WK07',m:9310, g:13603,mr:4.99,mp:474},
-  {w:'WK08',m:7401, g:12767,mr:5.98,mp:408},
-  {w:'WK09',m:14621,g:14622,mr:4.61,mp:695}
-];
+var PST = D.paid_spend_trend.map(function(p){return {w:p.week,m:p.meta,g:p.google,mr:p.meta_roas,mp:p.meta_purchases};});
 new Chart(document.getElementById('chSpendTrend'), {
   type:'bar',
   data:{
@@ -854,14 +846,7 @@ new Chart(document.getElementById('chEmail'), {
 });
 
 // ── SEGMENTS ───────────────────────────────────────────────────────────────
-var SG = [
-  {s:'1st Order', o:629,r:53150,aov:84.50},
-  {s:'2nd Order', o:199,r:20000,aov:100.50},
-  {s:'3rd Order', o:84, r:8217, aov:97.82},
-  {s:'4-5 Orders',o:94, r:8893, aov:94.61},
-  {s:'6-10 Orders',o:71,r:7696, aov:108.39},
-  {s:'11+ Orders',o:55, r:7650, aov:139.09}
-];
+var SG = D.segments.map(function(s){return {s:s.segment,o:s.orders,r:s.revenue,aov:s.aov};});
 var tSO=SG.reduce(function(a,s){return a+s.o;},0);
 var tSR=SG.reduce(function(a,s){return a+s.r;},0);
 new Chart(document.getElementById('chSeg'), {
@@ -949,18 +934,7 @@ CO.forEach(function(c) {
 });
 
 // ── CHANNELS ───────────────────────────────────────────────────────────────
-var CH = [
-  {n:'Paid Social',    s:31299,r:19900},
-  {n:'Cross-network',  s:19351,r:16059},
-  {n:'Unassigned',     s:31097,r:14919},
-  {n:'Paid Search',    s:5908, r:11103},
-  {n:'Direct',         s:25893,r:9890},
-  {n:'Email',          s:3661, r:9474},
-  {n:'Organic Search', s:4601, r:4358},
-  {n:'SMS',            s:1408, r:2628},
-  {n:'Referral',       s:2831, r:2167},
-  {n:'Organic Social', s:4967, r:1518}
-];
+var CH = D.channels.map(function(c){return {n:c.name,s:c.sessions,r:c.revenue};});
 new Chart(document.getElementById('chChannel'), {
   type:'bar',
   data:{labels:CH.map(function(c){return c.n;}),datasets:[{data:CH.map(function(c){return c.r;}),backgroundColor:['#7c3aed','#1877F2','#34A853','#9ca3af','#6b7280','#d97706','#2563eb','#0891b2','#db2777','#f59e0b'],borderWidth:0,borderRadius:4}]},
@@ -1000,42 +974,21 @@ CH.forEach(function(c) {
 });
 new Chart(document.getElementById('chStock'), {
   type:'doughnut',
-  data:{labels:['In Stock','Low Stock (1-5)','Out of Stock'],datasets:[{data:[2194,4123,9848],backgroundColor:['rgba(5,150,105,.2)','rgba(217,119,6,.2)','rgba(220,38,38,.2)'],borderColor:['#059669','#d97706','#dc2626'],borderWidth:1.5}]},
+  data:{labels:['In Stock','Low Stock (1-5)','Out of Stock'],datasets:[{data:D.inventory.stock_distribution,backgroundColor:['rgba(5,150,105,.2)','rgba(217,119,6,.2)','rgba(220,38,38,.2)'],borderColor:['#059669','#d97706','#dc2626'],borderWidth:1.5}]},
   options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{position:'bottom',labels:{padding:8,boxWidth:8,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp,callbacks:{label:function(c){return c.raw.toLocaleString()+' variants';}}}}}
 });
 
 // ── GSC KEYWORDS ───────────────────────────────────────────────────────────
-[
-  {q:'star wars shirts',   cl:18,imp:472, pos:8.2},
-  {q:'star wars merch',    cl:17,imp:526, pos:17.1},
-  {q:'daredevil merch',    cl:15,imp:103, pos:9.4},
-  {q:'spiderman hoodie',   cl:14,imp:874, pos:11.7},
-  {q:'star wars shirt',    cl:13,imp:622, pos:8.9},
-  {q:'star wars hoodie',   cl:13,imp:296, pos:8.3},
-  {q:'critical role merch',cl:13,imp:407, pos:13.3},
-  {q:'spiderman shirt',    cl:12,imp:1021,pos:6.6},
-  {q:'mtg backpack',       cl:11,imp:54,  pos:3.9},
-  {q:'star wars hat',      cl:10,imp:249, pos:7.6},
-  {q:'mighty nein merch',  cl:10,imp:61,  pos:2.7},
-  {q:'dnd shirts',         cl:10,imp:128, pos:4.6}
-].forEach(function(k) {
-  var pc = k.pos<=5?'cg':k.pos<=10?'co':'cr';
+D.gsc_keywords.forEach(function(k) {
+  var pc = k.position<=5?'cg':k.position<=10?'co':'cr';
   document.getElementById('tKeyB').innerHTML +=
-    '<tr><td class="nm" style="font-size:10px">' + k.q + '</td>' +
-    '<td class="mn">' + k.cl + '</td><td class="mn">' + k.imp.toLocaleString() + '</td>' +
-    '<td class="mn r ' + pc + '">' + k.pos.toFixed(1) + '</td></tr>';
+    '<tr><td class="nm" style="font-size:10px">' + k.query + '</td>' +
+    '<td class="mn">' + k.clicks + '</td><td class="mn">' + k.impressions.toLocaleString() + '</td>' +
+    '<td class="mn r ' + pc + '">' + k.position.toFixed(1) + '</td></tr>';
 });
 
 // ── GSC WEEKLY TREND ───────────────────────────────────────────────────────
-var GSC = [
-  {w:'WK02',cl:2412,imp:174413,ctr:1.38},
-  {w:'WK03',cl:2352,imp:171160,ctr:1.37},
-  {w:'WK04',cl:2541,imp:167792,ctr:1.51},
-  {w:'WK05',cl:2318,imp:156762,ctr:1.48},
-  {w:'WK07',cl:1802,imp:134096,ctr:1.34},
-  {w:'WK08',cl:1759,imp:124669,ctr:1.41},
-  {w:'WK09',cl:1759,imp:124669,ctr:1.41}
-];
+var GSC = D.gsc_trend.map(function(g){return {w:g.week,cl:g.clicks,imp:g.impressions,ctr:g.ctr};});
 new Chart(document.getElementById('chGSCTrend'), {
   type:'bar',
   data:{
@@ -1096,6 +1049,7 @@ GSC.forEach(function(g) {
     '<td class="mn cr">' + pct + '%</td>' +
     '<td class="mn c3">' + q.p6 + '</td><td class="mn r ' + pc + '">' + q.p7 + '</td></tr>';
 });
+}); // end fetch
 </script>
 </body>
 </html>
