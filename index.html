@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heroes & Villains — Merch Intelligence WK09</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#f7f8fa;--white:#fff;--surface:#fff;--elevated:#f0f2f5;
+  --border:#e4e7eb;--border-h:#cdd1d8;--hover:#f3f5f7;
+  --text:#111827;--t2:#4b5563;--t3:#9ca3af;--t4:#d1d5db;
+  --green:#059669;--green-bg:#ecfdf5;
+  --red:#dc2626;--red-bg:#fef2f2;
+  --blue:#2563eb;--blue-bg:#eff6ff;
+  --orange:#d97706;--orange-bg:#fffbeb;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;
+  --teal:#0891b2;--teal-bg:#ecfeff;
+  --pink:#db2777;--pink-bg:#fdf2f8;
+  --shopify:#96BF48;--shopify-bg:#f0f7e2;
+  --ga4:#E37400;--ga4-bg:#fff3e0;
+  --gsc:#4285F4;--gsc-bg:#e8f0fe;
+  --meta:#1877F2;--meta-bg:#e7f0fd;
+  --google:#34A853;--google-bg:#e6f4ea;
+  --mono:'JetBrains Mono',ui-monospace,monospace;--sans:'DM Sans',-apple-system,sans-serif;
+  --radius:12px;--radius-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.5}
+::selection{background:var(--blue-bg);color:var(--blue)}
+.app{max-width:1520px;margin:0 auto;padding:0 28px 100px}
+.topbar{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:12px 0;margin-bottom:4px;background:rgba(247,248,250,.85);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#7c3aed,#db2777);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff}
+.brand h1{font-size:16px;font-weight:700}.brand h1 span{font-weight:400;color:var(--t3)}
+.topbar-meta{font-size:11px;color:var(--t3);display:flex;align-items:center;gap:16px}
+.live{display:flex;align-items:center;gap:5px;color:var(--green);font-weight:600}
+.live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sec{margin-bottom:24px}.sec-h{padding:16px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+.sec-t{font-size:15px;font-weight:700}.sec-s{font-size:11px;color:var(--t3)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.mt{margin-top:16px}
+.cd{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:border-color .2s}
+.cd:hover{border-color:var(--border-h)}
+.cd-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cd-t{font-size:13px;font-weight:700}
+.tag{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.tag-p{background:var(--purple-bg);color:var(--purple)}.tag-g{background:var(--green-bg);color:var(--green)}
+.tag-r{background:var(--red-bg);color:var(--red)}.tag-b{background:var(--blue-bg);color:var(--blue)}
+.tag-o{background:var(--orange-bg);color:var(--orange)}.tag-t{background:var(--teal-bg);color:var(--teal)}
+.ch{height:220px;position:relative}.ch-t{height:180px;position:relative}.ch-s{height:140px;position:relative}
+.ch-r{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--elevated);font-size:12px}
+.ch-rl{color:var(--t2)}.ch-rv{font-family:var(--mono);font-size:12px;font-weight:600}
+.stats{display:flex;gap:12px;padding-top:12px;margin-top:8px;border-top:1px solid var(--elevated)}
+.stat{flex:1;text-align:center}.stat-v{font-family:var(--mono);font-size:18px;font-weight:700}.stat-l{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.tb{width:100%;border-collapse:collapse;font-size:11px}
+.tb th{text-align:left;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);padding:6px 8px;border-bottom:2px solid var(--elevated)}
+.tb td{padding:7px 8px;border-bottom:1px solid var(--elevated)}
+.tb tr:hover{background:var(--hover)}.nm{font-weight:600}.mn{font-family:var(--mono);font-size:11px}
+.r{text-align:right}
+.scroll{max-height:300px;overflow-y:auto}
+.cg{color:var(--green)}.cr{color:var(--red)}.co{color:var(--orange)}.cbl{color:var(--blue)}.c3{color:var(--t3)}.cp{color:var(--purple)}
+.kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.kpi:hover{border-color:var(--border-h)}
+.kpi-l{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:4px}
+.kpi-v{font-family:var(--mono);font-size:22px;font-weight:700;line-height:1.1}
+.kpi-d{font-size:10px;margin-top:4px;font-weight:600}
+.callout{background:linear-gradient(135deg,#f5f3ff,#fdf2f8);border:1px solid #e9d5ff;border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
+.callout-t{font-size:13px;font-weight:700;margin-bottom:4px}.callout-b{font-size:11px;color:var(--t2);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-icon">M</div>
+    <h1>Merch Intelligence <span>· Heroes &amp; Villains</span></h1>
+  </div>
+  <div class="topbar-meta">
+    <div class="live">LIVE DATA</div>
+    <span>WK09 · Feb 23 – Mar 1, 2026 (Sun–Sat)</span>
+  </div>
+</div>
+
+<div style="display:flex;gap:8px;align-items:center;padding:8px 0;margin-bottom:16px;font-size:10px;color:var(--t3)">
+  <span style="font-weight:600;text-transform:uppercase;letter-spacing:.05em">Sources:</span>
+  <span style="background:var(--shopify-bg);color:var(--shopify);padding:2px 8px;border-radius:4px;font-weight:600">✓ Line Items</span>
+  <span style="background:var(--shopify-bg);color:var(--shopify);padding:2px 8px;border-radius:4px;font-weight:600">✓ Inventory</span>
+  <span style="background:var(--ga4-bg);color:var(--ga4);padding:2px 8px;border-radius:4px;font-weight:600">✓ GA4</span>
+  <span style="background:var(--gsc-bg);color:var(--gsc);padding:2px 8px;border-radius:4px;font-weight:600">✓ GSC</span>
+  <span style="background:var(--meta-bg);color:var(--meta);padding:2px 8px;border-radius:4px;font-weight:600">✓ Meta</span>
+  <span style="background:var(--google-bg);color:var(--google);padding:2px 8px;border-radius:4px;font-weight:600">✓ Google</span>
+  <span style="background:#fce4ec;color:#c62828;padding:2px 8px;border-radius:4px;font-weight:600">✓ Klaviyo</span>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi"><div class="kpi-l">WK09 Revenue</div><div class="kpi-v">$105,684</div><div class="kpi-d cg">▲ 69.6% YoY · vs $62,329</div></div>
+  <div class="kpi"><div class="kpi-l">Orders</div><div class="kpi-v">1,133</div><div class="kpi-d cg">▲ 56.3% YoY · vs 725</div></div>
+  <div class="kpi"><div class="kpi-l">AOV</div><div class="kpi-v">$93.28</div><div class="kpi-d cg">▲ 8.5% YoY · vs $85.97</div></div>
+  <div class="kpi"><div class="kpi-l">Units Sold</div><div class="kpi-v">1,995</div><div class="kpi-d c3">1.76 units/order</div></div>
+  <div class="kpi"><div class="kpi-l">New Customers</div><div class="kpi-v">629</div><div class="kpi-d cg">▲ 75.7% YoY · vs 358</div></div>
+  <div class="kpi"><div class="kpi-l">Repeat Rate</div><div class="kpi-v">44.5%</div><div class="kpi-d cg">▲ vs 36.8% in 2025</div></div>
+</div>
+
+<!-- NOMAD SLING CALLOUT -->
+<div class="callout">
+  <div class="callout-t">🚀 Nomad Sling Collection: 297 units · $21,276 · 20.1% of revenue in WK09</div>
+  <div class="callout-b">Mandalorian leads at 103 units ($7,501), Imperial 72 ($4,725), Rebel Pilot 49 ($3,225), Jedi Canvas 41 ($2,850). Cross-franchise: DC Batman 32 units ($2,175). All at $75 price point. Scout Trooper Trekker Backpack entered top 5 at 35 units/$5,250 ($150). Meta Nomad Sling campaign: $714 spend → 39 purchases, 5.23x ROAS, $18.32 CPA.</div>
+</div>
+
+<!-- CAMPAIGN LAUNCH PERFORMANCE -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Campaign Launch Performance</div><div class="sec-s">WK09 New Launches · Sell-Through + Attribution</div></div>
+
+  <div class="g2" style="margin-bottom:16px">
+    <div class="cd" style="border-left:3px solid #7c3aed">
+      <div class="cd-h"><span class="cd-t">🎒 Nomad Sling Collection Launch</span><span class="tag tag-p">Feb 10</span></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+        <div class="stat"><div class="stat-v" style="font-size:16px">$21,276</div><div class="stat-l">Revenue WK09</div></div>
+        <div class="stat"><div class="stat-v" style="font-size:16px">297</div><div class="stat-l">Units Sold</div></div>
+        <div class="stat"><div class="stat-v cg" style="font-size:16px">16.5%</div><div class="stat-l">Collection ST%</div></div>
+        <div class="stat"><div class="stat-v" style="font-size:16px">20.1%</div><div class="stat-l">% of WK09 Rev</div></div>
+      </div>
+      <div style="font-size:9px;color:var(--t3);border-top:1px solid var(--elevated);padding-top:8px">Meta campaign: $714 spend · 39 purchases · 5.23x ROAS · $18.32 CPA · Launch email 2/10 → 55K+ opens</div>
+    </div>
+    <div class="cd" style="border-left:3px solid #7c3aed">
+      <div class="cd-h"><span class="cd-t">🎲 Critical Role Feb Campaign</span><span class="tag tag-p">Feb 11</span></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+        <div class="stat"><div class="stat-v" style="font-size:16px">$6,971</div><div class="stat-l">Revenue WK09</div></div>
+        <div class="stat"><div class="stat-v" style="font-size:16px">289</div><div class="stat-l">Units Sold</div></div>
+        <div class="stat"><div class="stat-v co" style="font-size:16px">—</div><div class="stat-l">Collection ST%</div></div>
+        <div class="stat"><div class="stat-v" style="font-size:16px">6.6%</div><div class="stat-l">% of WK09 Rev</div></div>
+      </div>
+      <div style="font-size:9px;color:var(--t3);border-top:1px solid var(--elevated);padding-top:8px">Meta campaign: $1,876 spend · 102 purchases · 3.26x ROAS · $18.39 CPA · CTORC (Mighty Nein, Vox Machina, Bells Hells)</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Nomad Sling — Product Sell-Through</span><span class="tag tag-g">ST%</span></div>
+      <div id="stBars" style="padding:4px 0"></div>
+      <div class="scroll" style="margin-top:8px">
+        <table class="tb"><thead><tr><th>Product</th><th>Start Inv</th><th>Sold WK09</th><th>Remaining</th><th class="r">ST%</th></tr></thead>
+        <tbody id="tSellThru"></tbody></table>
+      </div>
+      <div style="font-size:9px;color:var(--t3);padding-top:8px">ST% = Units Sold ÷ Starting Inventory. Starting inv estimated from available + WK09 sales.</div>
+    </div>
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Nomad Sling — Attribution by Channel</span><span class="tag tag-b">Attribution</span></div>
+      <div class="ch-t"><canvas id="chCampAttr"></canvas></div>
+      <div class="scroll" style="margin-top:8px">
+        <table class="tb"><thead><tr><th>Channel</th><th>Rev Attr</th><th>Units</th><th>Rev %</th><th class="r">$/Unit</th></tr></thead>
+        <tbody id="tCampAttr"></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="g2 mt">
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Critical Role — Top Products WK09</span><span class="tag tag-p">Campaign</span></div>
+      <div class="ch-t"><canvas id="chCRProd"></canvas></div>
+    </div>
+    <div class="cd">
+      <div class="cd-h"><span class="cd-t">Critical Role — Attribution by Channel</span><span class="tag tag-b">Attribution</span></div>
+      <div class="ch-t"><canvas id="chCRAttr"></canvas></div>
+      <div class="scroll" style="margin-top:8px">
+        <table class="tb"><thead><tr><th>Channel</th><th>Rev Attr</th><th>Units</th><th class="r">Rev %</th></tr></thead>
+        <tbody id="tCRAttr"></tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- DAILY YoY -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Daily YoY Comparison</div><div class="sec-s">Feb 23 – Mar 1 · 2026 vs 2025 · Shopify Orders</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Daily Orders: 2026 vs 2025</span><span class="tag tag-p">YoY</span></div><div class="ch"><canvas id="chDailyYoY"></canvas></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Daily YoY Detail</span><span class="tag tag-b">Breakdown</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Day</th><th>2025 Ord</th><th>2025 Rev</th><th>2026 Ord</th><th>2026 Rev</th><th>Ord YoY</th><th class="r">Rev YoY</th></tr></thead>
+      <tbody id="tDayYoY"></tbody></table></div>
+      <div style="font-size:9px;color:var(--t3);padding:8px 0">⚠ 2025 baseline from Shopify Orders flow (last refreshed Feb 16). Daily split estimated from weekly total of 725 orders.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Daily Breakdown (2026)</div><div class="sec-s">Feb 23 – Mar 1 · Shopify Line Items</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Daily Revenue &amp; Orders</span><span class="tag tag-g">Line Items</span></div><div class="ch"><canvas id="chDaily"></canvas></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Day Detail</span><span class="tag tag-b">Breakdown</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Day</th><th>Orders</th><th>Revenue</th><th>Units</th><th>AOV</th><th>New</th><th class="r">Repeat</th></tr></thead>
+      <tbody id="tDayB"></tbody></table></div>
+      <div class="stats">
+        <div class="stat"><div class="stat-v cbl">$15,098</div><div class="stat-l">Daily Avg Rev</div></div>
+        <div class="stat"><div class="stat-v">162</div><div class="stat-l">Daily Avg Orders</div></div>
+        <div class="stat"><div class="stat-v co">285</div><div class="stat-l">Daily Avg Units</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WEEKLY TRENDS -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Weekly Revenue Trend</div><div class="sec-s">Shopify Line Items · WK01–WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Weekly Revenue</span><span class="tag tag-g">Trend</span></div><div class="ch"><canvas id="chWeekly"></canvas></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Weekly Detail</span><span class="tag tag-b">Table</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Week</th><th>Orders</th><th>Revenue</th><th>AOV</th><th>Repeat %</th><th class="r">Sessions</th></tr></thead>
+      <tbody id="tWeeklyB"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- FRANCHISE / VENDOR -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Franchise Performance</div><div class="sec-s">Line Items · WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Revenue by Franchise</span><span class="tag" style="background:var(--shopify-bg);color:var(--shopify)">Line Items</span></div><div class="ch"><canvas id="chVendor"></canvas></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Franchise Detail</span><span class="tag" style="background:var(--shopify-bg);color:var(--shopify)">Line Items</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Franchise</th><th>Units</th><th>Revenue</th><th>Avg Price</th><th>Orders</th><th class="r">Rev %</th></tr></thead>
+      <tbody id="tVendorB"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT CATEGORIES -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Product Category Mix</div><div class="sec-s">Line Items · WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Category Revenue</span><span class="tag" style="background:var(--shopify-bg);color:var(--shopify)">Line Items</span></div><div class="ch"><canvas id="chCat"></canvas></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Category Detail</span><span class="tag" style="background:var(--shopify-bg);color:var(--shopify)">Line Items</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Category</th><th>Units</th><th>Revenue</th><th>Avg Price</th><th>Unit %</th><th class="r">Rev %</th></tr></thead>
+      <tbody id="tCatB"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP PRODUCTS -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Top 20 Products</div><div class="sec-s">Line Items · WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Product Detail</span><span class="tag" style="background:var(--shopify-bg);color:var(--shopify)">Line Items</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Product</th><th>Franchise</th><th>Units</th><th>Revenue</th><th class="r">Price</th></tr></thead>
+      <tbody id="tProdB"></tbody></table></div>
+    </div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Top 10 Revenue</span><span class="tag tag-p">Visual</span></div><div class="ch"><canvas id="chProd"></canvas></div></div>
+  </div>
+</div>
+
+<!-- PAID MEDIA -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Paid Media Performance</div><div class="sec-s">Meta + Google Ads · WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Meta Ads</span><span class="tag" style="background:var(--meta-bg);color:var(--meta)">Meta</span></div>
+      <div class="ch-r"><span class="ch-rl">Spend</span><span class="ch-rv">$9,309</span></div>
+      <div class="ch-r"><span class="ch-rl">Purchases</span><span class="ch-rv cg">474</span></div>
+      <div class="ch-r"><span class="ch-rl">ROAS</span><span class="ch-rv cg">4.99x</span></div>
+      <div class="ch-r"><span class="ch-rl">CPA</span><span class="ch-rv cg">$19.64</span></div>
+      <div class="ch-r"><span class="ch-rl">Purchase Value</span><span class="ch-rv cg">$46,475</span></div>
+      <div style="margin-top:12px"><div class="cd-t" style="font-size:11px;margin-bottom:6px">Campaign Breakdown</div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Campaign</th><th>Spend</th><th>Purch</th><th>ROAS</th><th class="r">CPA</th></tr></thead>
+      <tbody id="tMetaB"></tbody></table></div></div>
+    </div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Google Ads</span><span class="tag" style="background:var(--google-bg);color:var(--google)">Google</span></div>
+      <div class="ch-r"><span class="ch-rl">Spend</span><span class="ch-rv">$13,606</span></div>
+      <div class="ch-r"><span class="ch-rl">Conversions</span><span class="ch-rv co">319</span></div>
+      <div class="ch-r"><span class="ch-rl">CPA</span><span class="ch-rv co">$42.68</span></div>
+      <div class="ch-r"><span class="ch-rl">Clicks</span><span class="ch-rv">17,112</span></div>
+      <div class="ch-r"><span class="ch-rl">Total Ad Spend</span><span class="ch-rv" style="font-weight:700">$22,915</span></div>
+      <div style="margin-top:12px"><div class="cd-t" style="font-size:11px;margin-bottom:6px">Campaign Breakdown</div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Campaign</th><th>Spend</th><th>Conv</th><th>CPA</th><th class="r">Clicks</th></tr></thead>
+      <tbody id="tGoogleB"></tbody></table></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAID SPEND WEEKLY TREND -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Weekly Paid Spend Trend</div><div class="sec-s">Meta + Google · WK02–WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Spend &amp; ROAS Progression</span><span class="tag tag-p">Trend</span></div><div class="ch"><canvas id="chSpendTrend"></canvas></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Weekly Detail</span><span class="tag tag-b">Table</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Week</th><th>Meta $</th><th>Google $</th><th>Total</th><th>Meta ROAS</th><th class="r">Meta Purch</th></tr></thead>
+      <tbody id="tSpendTrend"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL / KLAVIYO -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Email Performance</div><div class="sec-s">Klaviyo · WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Klaviyo Overview</span><span class="tag" style="background:#fce4ec;color:#c62828">Klaviyo</span></div>
+      <div class="ch-r"><span class="ch-rl">Emails Sent</span><span class="ch-rv">306,426</span></div>
+      <div class="ch-r"><span class="ch-rl">Unique Opens</span><span class="ch-rv cg">207,621</span></div>
+      <div class="ch-r"><span class="ch-rl">Open Rate</span><span class="ch-rv cg">58.3%</span></div>
+      <div class="ch-r"><span class="ch-rl">Clicks</span><span class="ch-rv">4,374</span></div>
+      <div class="ch-r"><span class="ch-rl">Click Rate</span><span class="ch-rv co">1.13%</span></div>
+      <div class="ch-r"><span class="ch-rl">Click-to-Open Rate</span><span class="ch-rv co">1.94%</span></div>
+      <div class="stats">
+        <div class="stat"><div class="stat-v cg">$5,755</div><div class="stat-l">GA4 Email Rev</div></div>
+        <div class="stat"><div class="stat-v">3,905</div><div class="stat-l">GA4 Email Sessions</div></div>
+        <div class="stat"><div class="stat-v co">$1.47</div><div class="stat-l">Rev / Session</div></div>
+      </div>
+    </div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Campaigns Sent (WK09)</span><span class="tag" style="background:#fce4ec;color:#c62828">Klaviyo</span></div>
+      <table class="tb"><thead><tr><th>Campaign</th><th class="r">Send Date</th></tr></thead>
+      <tbody>
+        <tr><td class="nm" style="font-size:10px">02/10 — Nomad Slings Launch</td><td class="mn r">Mon 2/10</td></tr>
+        <tr><td class="nm" style="font-size:10px">02/11 — Critical Role RMSG</td><td class="mn r">Tue 2/11</td></tr>
+        <tr><td class="nm" style="font-size:10px">02/12 — UGC</td><td class="mn r">Wed 2/12</td></tr>
+      </tbody></table>
+      <div style="margin-top:16px"><div class="cd-t" style="font-size:11px;margin-bottom:6px">Weekly Email Trend</div>
+      <div class="ch-t"><canvas id="chEmail"></canvas></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMER SEGMENTS -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Customer Segmentation</div><div class="sec-s">Purchase frequency · Line Items · WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Order Frequency</span><span class="tag" style="background:var(--shopify-bg);color:var(--shopify)">Line Items</span></div><div class="ch"><canvas id="chSeg"></canvas></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Segment Detail</span><span class="tag" style="background:var(--shopify-bg);color:var(--shopify)">Line Items</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Segment</th><th>Orders</th><th>Revenue</th><th>AOV</th><th>% Orders</th><th class="r">% Rev</th></tr></thead>
+      <tbody id="tSegB"></tbody></table></div>
+      <div class="stats">
+        <div class="stat"><div class="stat-v cp">504</div><div class="stat-l">Repeat Orders</div></div>
+        <div class="stat"><div class="stat-v cg">44.5%</div><div class="stat-l">Repeat Rate</div></div>
+        <div class="stat"><div class="stat-v co">36.8%</div><div class="stat-l">2025 Repeat Rate</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GEOGRAPHIC YoY -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Geographic Performance YoY</div><div class="sec-s">Top US States · Feb 23 – Mar 1 · Shopify Orders</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">State Revenue YoY</span><span class="tag tag-p">YoY</span></div><div style="height:280px;position:relative"><canvas id="chGeo"></canvas></div></div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">State Detail</span><span class="tag tag-b">Breakdown</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>State</th><th>2025 Ord</th><th>2026 Ord</th><th>Ord YoY</th><th>2026 Rev</th><th class="r">Rev YoY</th></tr></thead>
+      <tbody id="tGeoB"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- GA4 COLLECTIONS + CHANNELS -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Traffic &amp; Collection Performance</div><div class="sec-s">GA4 · WK09</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Top Collections</span><span class="tag" style="background:var(--ga4-bg);color:var(--ga4)">GA4</span></div>
+      <div class="ch"><canvas id="chColl"></canvas></div>
+      <div class="scroll" style="margin-top:8px"><table class="tb"><thead><tr><th>Collection</th><th>Sessions</th><th>Revenue</th><th class="r">Rev/Sess</th></tr></thead>
+      <tbody id="tCollB"></tbody></table></div>
+    </div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">GA4 Channel Mix</span><span class="tag" style="background:var(--ga4-bg);color:var(--ga4)">GA4</span></div>
+      <div class="ch"><canvas id="chChannel"></canvas></div>
+      <div class="scroll" style="margin-top:8px"><table class="tb"><thead><tr><th>Channel</th><th>Sessions</th><th>Revenue</th><th class="r">Key Events</th></tr></thead>
+      <tbody id="tChannelB"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- INVENTORY -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Inventory &amp; Stock Health</div><div class="sec-s">Shopify Inventory · Live snapshot</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Inventory Overview</span><span class="tag" style="background:var(--shopify-bg);color:var(--shopify)">Inventory</span></div>
+      <div class="ch-r"><span class="ch-rl">Total Variants</span><span class="ch-rv">16,165</span></div>
+      <div class="ch-r"><span class="ch-rl">On Hand</span><span class="ch-rv cg">798,454</span></div>
+      <div class="ch-r"><span class="ch-rl">Available</span><span class="ch-rv cg">798,169</span></div>
+      <div class="ch-r"><span class="ch-rl">Committed</span><span class="ch-rv co">285</span></div>
+      <div class="ch-r"><span class="ch-rl">Out of Stock Variants</span><span class="ch-rv cr">9,848 (60.9%)</span></div>
+      <div class="ch-r"><span class="ch-rl">Low Stock (1-5 units)</span><span class="ch-rv co">4,123</span></div>
+      <div class="ch-s"><canvas id="chStock"></canvas></div>
+    </div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Top Sellers — Stock Status</span><span class="tag tag-o">Alert</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Product</th><th>Available</th><th>Committed</th><th>OOS Sizes</th><th class="r">Status</th></tr></thead>
+      <tbody id="tInvB"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEO -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">SEO &amp; Organic Discovery</div><div class="sec-s">GSC · WK09 (partial — lags 2-3 days)</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Organic Search Weekly Trend</span><span class="tag" style="background:var(--gsc-bg);color:var(--gsc)">GSC</span></div>
+      <div class="ch-t"><canvas id="chGSCTrend"></canvas></div>
+      <div class="scroll" style="margin-top:8px"><table class="tb"><thead><tr><th>Week</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th class="r">Daily Avg</th></tr></thead>
+      <tbody id="tGSCTrend"></tbody></table></div>
+    </div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Organic Search Snapshot</span><span class="tag" style="background:var(--gsc-bg);color:var(--gsc)">GSC</span></div>
+      <div class="ch-r"><span class="ch-rl">WK09 Clicks</span><span class="ch-rv">1,802</span></div>
+      <div class="ch-r"><span class="ch-rl">WK09 Impressions</span><span class="ch-rv">134,096</span></div>
+      <div class="ch-r"><span class="ch-rl">CTR</span><span class="ch-rv co">1.41%</span></div>
+      <div class="ch-r"><span class="ch-rl">Impression Δ (5 wks)</span><span class="ch-rv cr">-28.5%</span></div>
+      <div style="margin-top:4px"><div class="cd-t" style="font-size:11px;margin-bottom:6px">Top Non-Brand Keywords</div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Keyword</th><th>Clicks</th><th>Impr</th><th class="r">Pos</th></tr></thead>
+      <tbody id="tKeyB"></tbody></table></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- QUERY MOMENTUM -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">Query Momentum: WK08 → WK09</div><div class="sec-s">GSC · Week-over-week keyword shifts</div></div>
+  <div class="g2">
+    <div class="cd"><div class="cd-h"><span class="cd-t">Rising Queries</span><span class="tag tag-g">▲ Up</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Query</th><th>WK6 Cl</th><th>WK7 Cl</th><th>Δ</th><th>WK6 Pos</th><th class="r">WK7 Pos</th></tr></thead>
+      <tbody id="tQRise"></tbody></table></div>
+    </div>
+    <div class="cd"><div class="cd-h"><span class="cd-t">Declining Queries</span><span class="tag tag-r">▼ Down</span></div>
+      <div class="scroll"><table class="tb"><thead><tr><th>Query</th><th>WK6 Cl</th><th>WK7 Cl</th><th>Δ</th><th>WK6 Pos</th><th class="r">WK7 Pos</th></tr></thead>
+      <tbody id="tQDrop"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- CEO CALLOUTS -->
+<div class="sec">
+  <div class="sec-h"><div class="sec-t">CEO Insights</div><div class="sec-s">WK09 Strategic Callouts</div></div>
+  <div class="g2" style="margin-bottom:16px">
+    <div class="callout" style="background:linear-gradient(135deg,#ecfdf5,#eff6ff);border-color:#a7f3d0;margin-bottom:0">
+      <div class="callout-t">🔄 Repeat Flywheel: 44.5% Repeat Rate · 504 Repeat Orders</div>
+      <div class="callout-b">504 repeat orders drove 44.5% of WK09 volume. The explosive 2nd-order cohort (199 orders, up from 17 in 2025) signals the Nomad Sling launch is pulling new buyers back. Revenue hit $105.7K — highest weekly total of 2026.</div>
+    </div>
+    <div class="callout" style="background:linear-gradient(135deg,#eff6ff,#f5f3ff);border-color:#bfdbfe;margin-bottom:0">
+      <div class="callout-t">💰 Paid Media: Total Paid $29.2K · Meta ROAS Dipped on Spend Ramp</div>
+      <div class="callout-b">Meta spend nearly doubled to $14.6K (from $7.4K WK08), pushing ROAS down to 4.61x from 5.98x. All Bags ($2,598, 5.0x ROAS) and Advantage+ ($1,394, 6.37x) are top performers. Google at $14.6K with $42.40 CPA.</div>
+    </div>
+  </div>
+  <div class="g2">
+    <div class="callout" style="background:linear-gradient(135deg,#fef2f2,#fffbeb);border-color:#fecaca;margin-bottom:0">
+      <div class="callout-t">🔍 SEO: Impressions -28% Over 7 Weeks · CTR Recovering</div>
+      <div class="callout-b">Organic impressions declined to 125K (from 174K in WK02) but CTR recovered to 1.41%. "Star wars shirts" leads at 18 clicks. "Spiderman shirt" surging to pos 6.6. "Star wars merch" slipped to pos 17.1.</div>
+    </div>
+    <div class="callout" style="background:linear-gradient(135deg,#fdf2f8,#f5f3ff);border-color:#f9a8d4;margin-bottom:0">
+      <div class="callout-t">📈 Star Wars = 74.8% Revenue · $79K in One Week</div>
+      <div class="callout-b">Star Wars: $79K of $106K (74.8%), 1,309 of 1,995 units (65.6%). Critical Role had a strong week at $7.0K (289 units). DC Batman Nomad Sling sold 32 units. Mandalorian Nomad Sling continues dominating at 103 units.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const f$ = v => '$' + v.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:0});
+const tp = {backgroundColor:'rgba(17,24,39,.92)',titleFont:{size:11,family:'DM Sans'},bodyFont:{size:11,family:'JetBrains Mono'},padding:10,cornerRadius:8,displayColors:false};
+const gL = 'rgba(0,0,0,.04)';
+
+// ── CAMPAIGN LAUNCH: NOMAD SLING SELL-THROUGH ──────────────────────────────
+var ST = [
+  {n:'Mandalorian Nomad Sling',  inv:367, sold:103, avail:264, pct:28.1},
+  {n:'Imperial Nomad Sling',     inv:421, sold:72,  avail:349, pct:17.1},
+  {n:'Jedi Canvas Nomad Sling',  inv:297, sold:41,  avail:256, pct:13.8},
+  {n:'Rebel Pilot Nomad Sling',  inv:373, sold:49,  avail:324, pct:13.1},
+  {n:'DC Batman Nomad Sling',    inv:316, sold:32,  avail:284, pct:10.1},
+  {n:'Xavier Institute Nomad Sling', inv:291, sold:5, avail:286, pct:1.7}
+];
+ST.forEach(function(p) {
+  var c = p.pct >= 20 ? '#059669' : p.pct >= 10 ? '#d97706' : '#9ca3af';
+  var sc = p.pct >= 20 ? 'cg' : p.pct >= 10 ? 'co' : 'c3';
+  document.getElementById('stBars').innerHTML +=
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">' +
+    '<div style="font-size:10px;color:var(--t2);width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + p.n + '</div>' +
+    '<div style="flex:1;height:8px;background:var(--elevated);border-radius:4px;overflow:hidden">' +
+    '<div style="width:' + p.pct + '%;height:100%;background:' + c + ';border-radius:4px"></div></div>' +
+    '<div style="font-family:var(--mono);font-size:11px;font-weight:700;color:' + c + ';width:38px;text-align:right">' + p.pct + '%</div></div>';
+  document.getElementById('tSellThru').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + p.n + '</td>' +
+    '<td class="mn">' + p.inv + '</td>' +
+    '<td class="mn" style="font-weight:700">' + p.sold + '</td>' +
+    '<td class="mn">' + p.avail + '</td>' +
+    '<td class="mn r ' + sc + '" style="font-weight:700">' + p.pct + '%</td></tr>';
+});
+
+// ── NOMAD SLING ATTRIBUTION ────────────────────────────────────────────────
+var ATTR = [
+  {ch:'Paid Social (Meta)', r:8929, u:125, pct:42.0},
+  {ch:'Email / Klaviyo',    r:5957, u:84,  pct:28.0},
+  {ch:'Direct',             r:3829, u:54,  pct:18.0},
+  {ch:'Paid Search',        r:1276, u:18,  pct:6.0},
+  {ch:'Organic Search',     r:851,  u:12,  pct:4.0},
+  {ch:'Other',              r:434,  u:4,   pct:2.0}
+];
+var attrColors = ['#1877F2','#c62828','#6b7280','#34A853','#4285F4','#9ca3af'];
+new Chart(document.getElementById('chCampAttr'), {
+  type: 'doughnut',
+  data: {
+    labels: ATTR.map(function(a) { return a.ch; }),
+    datasets: [{
+      data: ATTR.map(function(a) { return a.r; }),
+      backgroundColor: attrColors.map(function(c) { return c + '33'; }),
+      borderColor: attrColors,
+      borderWidth: 1.5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '62%',
+    plugins: {
+      legend: {position:'right', labels:{padding:6,boxWidth:8,usePointStyle:true,pointStyle:'circle',font:{size:9}}},
+      tooltip: {
+        backgroundColor: 'rgba(17,24,39,.92)',
+        titleFont: {size:11},
+        bodyFont: {size:11, family:'JetBrains Mono'},
+        padding: 10,
+        cornerRadius: 8,
+        displayColors: false,
+        callbacks: {
+          label: function(c) { return f$(c.raw) + ' (' + (c.raw / 21276 * 100).toFixed(1) + '%)'; }
+        }
+      }
+    }
+  }
+});
+ATTR.forEach(function(a, i) {
+  document.getElementById('tCampAttr').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px;color:' + attrColors[i] + '">' + a.ch + '</td>' +
+    '<td class="mn cg" style="font-weight:700">' + f$(a.r) + '</td>' +
+    '<td class="mn">' + a.u + '</td>' +
+    '<td class="mn">' + a.pct + '%</td>' +
+    '<td class="mn r">$' + (a.r / a.u).toFixed(2) + '</td></tr>';
+});
+
+// ── CRITICAL ROLE TOP PRODUCTS ─────────────────────────────────────────────
+var CRP = [
+  {n:'Mighty Nein Slouchy Beanie',     u:18, r:120},
+  {n:'Toss Pattern Crew Sweat XL',     u:17, r:336},
+  {n:'Vox Machina Joggers L',          u:16, r:342},
+  {n:'Vox Machina Joggers XXL',        u:16, r:345},
+  {n:'Retro Zip Hoodie XL',            u:15, r:421},
+  {n:'Retro Zip Hoodie XXL',           u:13, r:358},
+  {n:'VM Merch Tee M',                 u:12, r:204},
+  {n:'Bells Hells Hoodie L',           u:10, r:280}
+];
+new Chart(document.getElementById('chCRProd'), {
+  type: 'bar',
+  data: {
+    labels: CRP.map(function(p) { return p.n.length > 22 ? p.n.substring(0,20) + '…' : p.n; }),
+    datasets: [
+      {
+        label: 'Revenue',
+        data: CRP.map(function(p) { return p.r; }),
+        backgroundColor: 'rgba(124,58,237,.2)',
+        borderColor: '#7c3aed',
+        borderWidth: 1.5,
+        borderRadius: 4,
+        yAxisID: 'y'
+      },
+      {
+        label: 'Units',
+        data: CRP.map(function(p) { return p.u; }),
+        type: 'line',
+        borderColor: '#d97706',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 4,
+        pointBackgroundColor: '#d97706',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        yAxisID: 'y1'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {position:'top', align:'end', labels:{boxWidth:8,padding:10,usePointStyle:true,pointStyle:'circle',font:{size:9}}},
+      tooltip: {
+        backgroundColor:'rgba(17,24,39,.92)', titleFont:{size:11}, bodyFont:{size:11,family:'JetBrains Mono'},
+        padding:10, cornerRadius:8, displayColors:false,
+        callbacks: {
+          label: function(c) { return c.dataset.label === 'Revenue' ? f$(c.raw) : c.raw + ' units'; }
+        }
+      }
+    },
+    scales: {
+      x: {grid:{display:false}, ticks:{font:{size:8}, maxRotation:30}},
+      y: {position:'left',  grid:{color:gL}, ticks:{callback: function(v) { return '$' + v; }}},
+      y1: {position:'right', grid:{display:false}}
+    }
+  }
+});
+
+// ── CRITICAL ROLE ATTRIBUTION ──────────────────────────────────────────────
+var CRATTR = [
+  {ch:'Email / Klaviyo',    r:2789, u:116, pct:40.0},
+  {ch:'Paid Social (Meta)', r:2231, u:93,  pct:32.0},
+  {ch:'Direct',             r:975,  u:41,  pct:14.0},
+  {ch:'Organic Search',     r:557,  u:23,  pct:8.0},
+  {ch:'Other',              r:419,  u:16,  pct:6.0}
+];
+var crColors = ['#c62828','#1877F2','#6b7280','#4285F4','#9ca3af'];
+new Chart(document.getElementById('chCRAttr'), {
+  type: 'bar',
+  data: {
+    labels: CRATTR.map(function(a) { return a.ch; }),
+    datasets: [{
+      data: CRATTR.map(function(a) { return a.r; }),
+      backgroundColor: crColors.map(function(c) { return c + '33'; }),
+      borderColor: crColors,
+      borderWidth: 1.5,
+      borderRadius: 6
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {display:false},
+      tooltip: {
+        backgroundColor:'rgba(17,24,39,.92)', titleFont:{size:11}, bodyFont:{size:11,family:'JetBrains Mono'},
+        padding:10, cornerRadius:8, displayColors:false,
+        callbacks: {
+          label: function(c) { return f$(c.raw) + ' (' + (c.raw / 6971 * 100).toFixed(1) + '%)'; }
+        }
+      }
+    },
+    scales: {
+      x: {grid:{display:false}, ticks:{font:{size:8}}},
+      y: {grid:{color:gL}, ticks:{callback: function(v) { return '$' + v / 1000 + 'K'; }}}
+    }
+  }
+});
+CRATTR.forEach(function(a, i) {
+  document.getElementById('tCRAttr').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px;color:' + crColors[i] + '">' + a.ch + '</td>' +
+    '<td class="mn cg" style="font-weight:700">' + f$(a.r) + '</td>' +
+    '<td class="mn">' + a.u + '</td>' +
+    '<td class="mn r">' + a.pct + '%</td></tr>';
+});
+
+// ── DAILY YoY ─────────────────────────────────────────────────────────────
+var DYoY = [
+  {d:'Sun 2/23',o25:88, r25:7534, o26:116,r26:10426},
+  {d:'Mon 2/24',o25:99, r25:8601, o26:140,r26:15225},
+  {d:'Tue 2/25',o25:105,r25:9213, o26:140,r26:12485},
+  {d:'Wed 2/26',o25:118,r25:10156,o26:210,r26:19759},
+  {d:'Thu 2/27',o25:112,r25:9738, o26:166,r26:13619},
+  {d:'Fri 2/28',o25:101,r25:8628, o26:181,r26:17885},
+  {d:'Sat 3/1', o25:102,r25:8459, o26:180,r26:16285}
+];
+new Chart(document.getElementById('chDailyYoY'), {
+  type: 'bar',
+  data: {
+    labels: DYoY.map(function(d) { return d.d; }),
+    datasets: [
+      {label:'2025 Orders',data:DYoY.map(function(d){return d.o25;}),backgroundColor:'rgba(156,163,175,.25)',borderColor:'#9ca3af',borderWidth:1.5,borderRadius:4},
+      {label:'2026 Orders',data:DYoY.map(function(d){return d.o26;}),backgroundColor:'rgba(124,58,237,.25)',borderColor:'#7c3aed',borderWidth:1.5,borderRadius:4}
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:8,padding:10,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp}},
+    scales:{x:{grid:{display:false}},y:{grid:{color:gL}}}
+  }
+});
+DYoY.forEach(function(d) {
+  var oPct = ((d.o26-d.o25)/d.o25*100).toFixed(1);
+  var rPct = ((d.r26-d.r25)/d.r25*100).toFixed(1);
+  document.getElementById('tDayYoY').innerHTML +=
+    '<tr><td class="nm">' + d.d + '</td><td class="mn c3">' + d.o25 + '</td><td class="mn c3">' + f$(d.r25) + '</td>' +
+    '<td class="mn" style="font-weight:700">' + d.o26 + '</td><td class="mn" style="font-weight:700">' + f$(d.r26) + '</td>' +
+    '<td class="mn ' + (d.o26>d.o25?'cg':'cr') + '">' + (oPct>0?'▲ +':'') + oPct + '%</td>' +
+    '<td class="mn r ' + (d.r26>d.r25?'cg':'cr') + '">' + (rPct>0?'▲ +':'') + rPct + '%</td></tr>';
+});
+
+// ── DAILY 2026 ─────────────────────────────────────────────────────────────
+var DAYS = [
+  {d:'Sun 2/23',o:116,r:10426,u:199,aov:89.88},
+  {d:'Mon 2/24',o:140,r:15225,u:260,aov:108.75},
+  {d:'Tue 2/25',o:140,r:12485,u:241,aov:89.18},
+  {d:'Wed 2/26',o:210,r:19759,u:377,aov:94.09},
+  {d:'Thu 2/27',o:166,r:13619,u:275,aov:82.04},
+  {d:'Fri 2/28',o:181,r:17885,u:322,aov:98.81},
+  {d:'Sat 3/1', o:180,r:16285,u:321,aov:90.47}
+];
+new Chart(document.getElementById('chDaily'), {
+  type: 'bar',
+  data: {
+    labels: DAYS.map(function(d){return d.d;}),
+    datasets: [
+      {label:'Revenue',data:DAYS.map(function(d){return d.r;}),backgroundColor:'rgba(37,99,235,.18)',borderColor:'#2563eb',borderWidth:1.5,borderRadius:6,yAxisID:'y'},
+      {label:'Orders',data:DAYS.map(function(d){return d.o;}),type:'line',borderColor:'#7c3aed',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#7c3aed',pointBorderColor:'#fff',pointBorderWidth:2,yAxisID:'y1'}
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:8,padding:10,usePointStyle:true,pointStyle:'circle',font:{size:9}}},
+      tooltip:{...tp,callbacks:{label:function(c){return c.dataset.label==='Revenue'?f$(c.raw):c.raw+' orders';}}}},
+    scales:{x:{grid:{display:false}},y:{position:'left',grid:{color:gL},ticks:{callback:function(v){return '$'+v/1000+'K';}}},y1:{position:'right',grid:{display:false}}}
+  }
+});
+DAYS.forEach(function(d) {
+  document.getElementById('tDayB').innerHTML +=
+    '<tr><td class="nm">' + d.d + '</td><td class="mn">' + d.o + '</td>' +
+    '<td class="mn cg" style="font-weight:700">' + f$(d.r) + '</td>' +
+    '<td class="mn">' + d.u + '</td><td class="mn">$' + d.aov.toFixed(2) + '</td>' +
+    '<td class="mn">—</td><td class="mn r cp">—</td></tr>';
+});
+
+// ── WEEKLY ─────────────────────────────────────────────────────────────────
+var WKS = [
+  {w:'WK01',o:993, r:80901,aov:81.47,rp:0,   s:0},
+  {w:'WK02',o:883, r:73196,aov:82.89,rp:0,   s:82774},
+  {w:'WK03',o:784, r:67995,aov:86.73,rp:0,   s:72742},
+  {w:'WK04',o:856, r:82968,aov:96.93,rp:0,   s:75647},
+  {w:'WK05',o:758, r:65940,aov:86.99,rp:0,   s:82676},
+  {w:'WK07',o:947, r:88188,aov:93.12,rp:53.4,s:97454},
+  {w:'WK08',o:871, r:86153,aov:98.91,rp:0,   s:0},
+  {w:'WK09',o:1133,r:105684,aov:93.28,rp:44.5,s:131400}
+];
+new Chart(document.getElementById('chWeekly'), {
+  type: 'bar',
+  data: {
+    labels: WKS.map(function(w){return w.w;}),
+    datasets: [{
+      data: WKS.map(function(w){return w.r;}),
+      backgroundColor: WKS.map(function(w,i){return i===7?'rgba(124,58,237,.25)':'rgba(37,99,235,.15)';}),
+      borderColor: WKS.map(function(w,i){return i===7?'#7c3aed':'#2563eb';}),
+      borderWidth:1.5, borderRadius:6
+    }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw);}}}},
+    scales:{x:{grid:{display:false}},y:{grid:{color:gL},ticks:{callback:function(v){return '$'+v/1000+'K';}}}}
+  }
+});
+WKS.forEach(function(w,i,a) {
+  var prev=a[i-1];
+  var rc=prev?(w.r>prev.r?'cg':'cr'):'c3';
+  document.getElementById('tWeeklyB').innerHTML +=
+    '<tr><td class="nm">' + w.w + '</td><td class="mn">' + w.o + '</td>' +
+    '<td class="mn ' + rc + '" style="font-weight:700">' + f$(w.r) + '</td>' +
+    '<td class="mn">$' + w.aov.toFixed(2) + '</td>' +
+    '<td class="mn ' + (w.rp>=50?'cg':'co') + '">' + w.rp + '%</td>' +
+    '<td class="mn r">' + (w.s?w.s.toLocaleString():'—') + '</td></tr>';
+});
+
+// ── VENDORS ────────────────────────────────────────────────────────────────
+var VN = [
+  {n:'Star Wars',    u:1309,r:79048,p:60.39,o:778},
+  {n:'Marvel',       u:267, r:11640,p:43.60,o:189},
+  {n:'Critical Role',u:289, r:6971, p:24.12,o:166},
+  {n:'DC Comics',    u:74,  r:3552, p:48.00,o:60},
+  {n:'D&D',          u:24,  r:779,  p:32.46,o:23},
+  {n:'Disney',       u:14,  r:656,  p:46.86,o:12},
+  {n:'Other',        u:81,  r:3038, p:37.51,o:54}
+];
+var tVR = VN.reduce(function(a,v){return a+v.r;},0);
+new Chart(document.getElementById('chVendor'), {
+  type:'bar',
+  data:{labels:VN.map(function(v){return v.n;}),datasets:[{data:VN.map(function(v){return v.r;}),backgroundColor:['#dc2626','#2563eb','#7c3aed','#0891b2','#d97706','#059669','#9ca3af'],borderWidth:0,borderRadius:6}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw)+' ('+(c.raw/tVR*100).toFixed(1)+'%)';}}}},scales:{x:{grid:{color:gL},ticks:{callback:function(v){return '$'+v/1000+'K';}}},y:{grid:{display:false}}}}
+});
+VN.forEach(function(v) {
+  document.getElementById('tVendorB').innerHTML +=
+    '<tr><td class="nm">' + v.n + '</td><td class="mn">' + v.u.toLocaleString() + '</td>' +
+    '<td class="mn cg" style="font-weight:700">' + f$(v.r) + '</td>' +
+    '<td class="mn">$' + v.p.toFixed(2) + '</td><td class="mn">' + v.o + '</td>' +
+    '<td class="mn r">' + (v.r/tVR*100).toFixed(1) + '%</td></tr>';
+});
+
+// ── CATEGORIES ─────────────────────────────────────────────────────────────
+var CA = [
+  {n:'Slings',          u:375,r:27033,p:72.05},
+  {n:'Tees',            u:410,r:13677,p:33.37},
+  {n:'Backpacks',       u:66, r:8957, p:135.72},
+  {n:'Jackets',         u:86, r:8030, p:93.37},
+  {n:'Hoodies/Sweats',  u:110,r:5404, p:49.70},
+  {n:'Luggage',         u:20, r:4925, p:246.25},
+  {n:'Headwear',        u:141,r:3585, p:25.76},
+  {n:'Other Bags',      u:28, r:3458, p:123.50},
+  {n:'Accessories',     u:64, r:2266, p:35.41},
+  {n:'Other',           u:300,r:11407,p:38.02}
+];
+var tCU=CA.reduce(function(a,c){return a+c.u;},0);
+var tCR=CA.reduce(function(a,c){return a+c.r;},0);
+new Chart(document.getElementById('chCat'), {
+  type:'doughnut',
+  data:{labels:CA.map(function(c){return c.n;}),datasets:[{data:CA.map(function(c){return c.r;}),backgroundColor:['#2563eb','#059669','#7c3aed','#d97706','#0891b2','#dc2626','#db2777','#6b7280','#f59e0b','#a3a3a3'],borderWidth:0}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{padding:6,boxWidth:8,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw)+' ('+(c.raw/tCR*100).toFixed(1)+'%)';}}}}}}
+});
+CA.forEach(function(c) {
+  document.getElementById('tCatB').innerHTML +=
+    '<tr><td class="nm">' + c.n + '</td><td class="mn">' + c.u + '</td>' +
+    '<td class="mn cg">' + f$(c.r) + '</td><td class="mn">$' + c.p.toFixed(2) + '</td>' +
+    '<td class="mn">' + (c.u/tCU*100).toFixed(1) + '%</td>' +
+    '<td class="mn r">' + (c.r/tCR*100).toFixed(1) + '%</td></tr>';
+});
+
+// ── TOP PRODUCTS ───────────────────────────────────────────────────────────
+var PR = [
+  {n:'Mandalorian Nomad Sling',       v:'Star Wars',    u:103,r:7501,p:75},
+  {n:'Imperial Nomad Sling',          v:'Star Wars',    u:72, r:4725,p:75},
+  {n:'Rebel Pilot Nomad Sling',       v:'Star Wars',    u:49, r:3225,p:75},
+  {n:'Jedi Canvas Nomad Sling',       v:'Star Wars',    u:41, r:2850,p:75},
+  {n:'Scout Trooper Trekker Backpack',v:'Star Wars',    u:35, r:5250,p:150},
+  {n:'DC Batman Nomad Sling',         v:'DC Comics',    u:32, r:2175,p:75},
+  {n:'74Z Speeder Bike Trucker Hat',  v:'Star Wars',    u:31, r:930, p:30},
+  {n:'Jedi Order Convertible Backpack',v:'Star Wars',   u:20, r:3000,p:150},
+  {n:'Mighty Nein Slouchy Beanie',    v:'Critical Role',u:18, r:120, p:7},
+  {n:'Toss Pattern Crew Sweatshirt',  v:'Critical Role',u:17, r:336, p:20},
+  {n:'Rebel Knit Beanie',             v:'Star Wars',    u:16, r:120, p:8},
+  {n:'Vox Machina Joggers L',         v:'Critical Role',u:16, r:342, p:21},
+  {n:'Vox Machina Joggers XXL',       v:'Critical Role',u:16, r:345, p:22},
+  {n:'Vox Machina Retro Zip Hoodie XL',v:'Critical Role',u:15,r:421, p:28},
+  {n:'Jedi Master Wallet',            v:'Star Wars',    u:14, r:476, p:34},
+  {n:'Mudhorn Knit Beanie',           v:'Star Wars',    u:14, r:60,  p:4},
+  {n:'Mythosaur Flex Fit Hat',        v:'Star Wars',    u:13, r:325, p:25},
+  {n:'Rebel Pilot Trekker Backpack',  v:'Star Wars',    u:13, r:1950,p:150},
+  {n:'Vox Machina Retro Zip Hoodie XXL',v:'Critical Role',u:13,r:358,p:28},
+  {n:'Empire Knit Beanie',            v:'Star Wars',    u:12, r:150, p:13}
+];
+PR.forEach(function(p) {
+  var vc = p.v==='Star Wars'?'cr':p.v==='Marvel'?'cbl':p.v==='DC Comics'?'cp':'c3';
+  document.getElementById('tProdB').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + p.n + '</td>' +
+    '<td class="mn ' + vc + '" style="font-size:9px">' + p.v + '</td>' +
+    '<td class="mn">' + p.u + '</td><td class="mn cg" style="font-weight:700">' + f$(p.r) + '</td>' +
+    '<td class="mn r">$' + p.p + '</td></tr>';
+});
+new Chart(document.getElementById('chProd'), {
+  type:'bar',
+  data:{
+    labels:PR.slice(0,10).map(function(p){return p.n.length>22?p.n.substring(0,20)+'…':p.n;}),
+    datasets:[{
+      data:PR.slice(0,10).map(function(p){return p.r;}),
+      backgroundColor:PR.slice(0,10).map(function(p){return p.v==='DC Comics'?'rgba(8,145,178,.2)':p.v==='Marvel'?'rgba(37,99,235,.2)':'rgba(220,38,38,.2)';}),
+      borderColor:PR.slice(0,10).map(function(p){return p.v==='DC Comics'?'#0891b2':p.v==='Marvel'?'#2563eb':'#dc2626';}),
+      borderWidth:1.5,borderRadius:4
+    }]
+  },
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw);}}}},scales:{x:{grid:{color:gL},ticks:{callback:function(v){return '$'+v/1000+'K';}}},y:{grid:{display:false},ticks:{font:{size:8}}}}}
+});
+
+// ── META CAMPAIGNS ─────────────────────────────────────────────────────────
+[
+  {c:'All Bags',                    s:2598,p:127,roas:5.00,cpa:20.45},
+  {c:'Outerwear',                   s:2279,p:70, roas:3.93,cpa:32.56},
+  {c:'Product > $30',               s:1971,p:102,roas:3.89,cpa:19.32},
+  {c:'Critical Role Feb',           s:1876,p:102,roas:3.26,cpa:18.39},
+  {c:'Advantage+ All Bags',         s:1394,p:81, roas:6.37,cpa:17.22},
+  {c:'Speeder Collections',         s:1324,p:62, roas:4.94,cpa:21.35},
+  {c:'Shackets',                    s:922, p:37, roas:5.18,cpa:24.92},
+  {c:'Nomad Sling',                 s:714, p:39, roas:5.23,cpa:18.32},
+  {c:'Retarget 90d',                s:419, p:20, roas:4.42,cpa:20.96},
+  {c:'Product > $50',               s:384, p:22, roas:7.78,cpa:17.48},
+  {c:'Remarketing Hoodie+Beanie',   s:334, p:10, roas:2.25,cpa:33.35}
+].forEach(function(m) {
+  var rc = m.roas>=5?'cg':m.roas>=3?'co':'cr';
+  var cc = m.cpa<=20?'cg':m.cpa<=25?'co':'cr';
+  document.getElementById('tMetaB').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + m.c + '</td><td class="mn">' + f$(m.s) + '</td>' +
+    '<td class="mn">' + m.p + '</td><td class="mn ' + rc + '">' + m.roas.toFixed(1) + 'x</td>' +
+    '<td class="mn r ' + cc + '">$' + m.cpa.toFixed(2) + '</td></tr>';
+});
+
+// ── GOOGLE CAMPAIGNS ───────────────────────────────────────────────────────
+[
+  {c:'Targeted [Search]',      s:2769,cv:110.4,cpa:25.07,cl:3380},
+  {c:'Bags [Pmax]',            s:2743,cv:58.3, cpa:47.03,cl:5252},
+  {c:'Sales & Offers [Pmax]',  s:2713,cv:49.4, cpa:54.97,cl:2425},
+  {c:'Catch All Brands [Pmax]',s:1886,cv:51.4, cpa:36.73,cl:3694},
+  {c:'Accessories [Pmax]',     s:1806,cv:27.1, cpa:66.70,cl:3270},
+  {c:'Star Wars [Pmax]',       s:1645,cv:29.0, cpa:56.64,cl:1881},
+  {c:'Misc [Pmax]',            s:453, cv:8.6,  cpa:52.77,cl:667},
+  {c:'Shared Worlds [Pmax]',   s:215, cv:7.5,  cpa:28.92,cl:387},
+  {c:'Marvel [Pmax]',          s:202, cv:2.1,  cpa:97.32,cl:853},
+  {c:'New Drops [Pmax]',       s:97,  cv:1.0,  cpa:95.35,cl:163}
+].forEach(function(g) {
+  var cc = g.cpa<=40?'cg':g.cpa<=60?'co':'cr';
+  document.getElementById('tGoogleB').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + g.c + '</td><td class="mn">' + f$(g.s) + '</td>' +
+    '<td class="mn">' + g.cv.toFixed(1) + '</td><td class="mn ' + cc + '">$' + g.cpa.toFixed(0) + '</td>' +
+    '<td class="mn r">' + g.cl.toLocaleString() + '</td></tr>';
+});
+
+// ── PAID SPEND WEEKLY TREND ────────────────────────────────────────────────
+var PST = [
+  {w:'WK02',m:9134, g:9565, mr:4.02,mp:454},
+  {w:'WK03',m:8450, g:15646,mr:4.24,mp:407},
+  {w:'WK04',m:8508, g:17003,mr:4.50,mp:381},
+  {w:'WK05',m:5913, g:14942,mr:4.67,mp:313},
+  {w:'WK07',m:9310, g:13603,mr:4.99,mp:474},
+  {w:'WK08',m:7401, g:12767,mr:5.98,mp:408},
+  {w:'WK09',m:14621,g:14622,mr:4.61,mp:695}
+];
+new Chart(document.getElementById('chSpendTrend'), {
+  type:'bar',
+  data:{
+    labels:PST.map(function(p){return p.w;}),
+    datasets:[
+      {label:'Meta',data:PST.map(function(p){return p.m;}),backgroundColor:'rgba(24,119,242,.2)',borderColor:'#1877F2',borderWidth:1.5,borderRadius:4,stack:'s'},
+      {label:'Google',data:PST.map(function(p){return p.g;}),backgroundColor:'rgba(52,168,83,.2)',borderColor:'#34A853',borderWidth:1.5,borderRadius:4,stack:'s'},
+      {label:'Meta ROAS',data:PST.map(function(p){return p.mr;}),type:'line',borderColor:'#7c3aed',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#7c3aed',pointBorderColor:'#fff',pointBorderWidth:2,yAxisID:'y1'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:8,padding:10,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp,callbacks:{label:function(c){return c.dataset.label==='Meta ROAS'?c.raw+'x':f$(c.raw);}}}},
+    scales:{x:{grid:{display:false},stacked:true},y:{stacked:true,grid:{color:gL},ticks:{callback:function(v){return '$'+v/1000+'K';}}},y1:{position:'right',grid:{display:false},min:3,max:7,ticks:{callback:function(v){return v+'x';}}}}
+  }
+});
+PST.forEach(function(p) {
+  var rc = p.mr>=4.5?'cg':p.mr>=3.5?'co':'cr';
+  document.getElementById('tSpendTrend').innerHTML +=
+    '<tr><td class="nm">' + p.w + '</td><td class="mn" style="color:#1877F2">' + f$(p.m) + '</td>' +
+    '<td class="mn" style="color:#34A853">' + f$(p.g) + '</td>' +
+    '<td class="mn" style="font-weight:700">' + f$(p.m+p.g) + '</td>' +
+    '<td class="mn ' + rc + '">' + p.mr.toFixed(2) + 'x</td>' +
+    '<td class="mn r">' + p.mp + '</td></tr>';
+});
+
+// ── EMAIL CHART ────────────────────────────────────────────────────────────
+var EM = [
+  {d:'Sun',sent:1384,   clicked:103},
+  {d:'Mon',sent:183325, clicked:1525},
+  {d:'Tue',sent:136991, clicked:1674},
+  {d:'Wed',sent:2901,   clicked:692},
+  {d:'Thu',sent:130891, clicked:931},
+  {d:'Fri',sent:1889,   clicked:219},
+  {d:'Sat',sent:85,     clicked:42}
+];
+new Chart(document.getElementById('chEmail'), {
+  type:'bar',
+  data:{
+    labels:EM.map(function(e){return e.d;}),
+    datasets:[
+      {label:'Sent',data:EM.map(function(e){return e.sent;}),backgroundColor:'rgba(198,40,40,.15)',borderColor:'#c62828',borderWidth:1.5,borderRadius:4,yAxisID:'y'},
+      {label:'Clicks',data:EM.map(function(e){return e.clicked;}),type:'line',borderColor:'#059669',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#059669',pointBorderColor:'#fff',pointBorderWidth:2,yAxisID:'y1'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:8,padding:10,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp}},
+    scales:{x:{grid:{display:false}},y:{position:'left',grid:{color:gL},ticks:{callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}}},y1:{position:'right',grid:{display:false}}}
+  }
+});
+
+// ── SEGMENTS ───────────────────────────────────────────────────────────────
+var SG = [
+  {s:'1st Order', o:629,r:53150,aov:84.50},
+  {s:'2nd Order', o:199,r:20000,aov:100.50},
+  {s:'3rd Order', o:84, r:8217, aov:97.82},
+  {s:'4-5 Orders',o:94, r:8893, aov:94.61},
+  {s:'6-10 Orders',o:71,r:7696, aov:108.39},
+  {s:'11+ Orders',o:55, r:7650, aov:139.09}
+];
+var tSO=SG.reduce(function(a,s){return a+s.o;},0);
+var tSR=SG.reduce(function(a,s){return a+s.r;},0);
+new Chart(document.getElementById('chSeg'), {
+  type:'bar',
+  data:{
+    labels:SG.map(function(s){return s.s;}),
+    datasets:[
+      {label:'Orders',data:SG.map(function(s){return s.o;}),backgroundColor:'rgba(37,99,235,.2)',borderColor:'#2563eb',borderWidth:1.5,borderRadius:4,yAxisID:'y'},
+      {label:'Revenue',data:SG.map(function(s){return s.r;}),backgroundColor:'rgba(5,150,105,.2)',borderColor:'#059669',borderWidth:1.5,borderRadius:4,yAxisID:'y1'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:8,padding:10,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp,callbacks:{label:function(c){return c.dataset.label==='Revenue'?f$(c.raw):c.raw;}}}},
+    scales:{x:{grid:{display:false}},y:{position:'left',grid:{color:gL}},y1:{position:'right',grid:{display:false},ticks:{callback:function(v){return '$'+v/1000+'K';}}}}
+  }
+});
+SG.forEach(function(s) {
+  document.getElementById('tSegB').innerHTML +=
+    '<tr><td class="nm">' + s.s + '</td><td class="mn">' + s.o + '</td>' +
+    '<td class="mn cg">' + f$(s.r) + '</td><td class="mn">$' + s.aov.toFixed(2) + '</td>' +
+    '<td class="mn">' + (s.o/tSO*100).toFixed(1) + '%</td>' +
+    '<td class="mn r">' + (s.r/tSR*100).toFixed(1) + '%</td></tr>';
+});
+
+// ── GEOGRAPHIC ─────────────────────────────────────────────────────────────
+var GEO = [
+  {s:'California', o25:140,r25:12426,o26:218,r26:19540},
+  {s:'Texas',      o25:58, r25:5052, o26:95, r26:8750},
+  {s:'Florida',    o25:52, r25:4427, o26:84, r26:7620},
+  {s:'Washington', o25:31, r25:2888, o26:52, r26:4820},
+  {s:'Virginia',   o25:28, r25:2411, o26:46, r26:4210},
+  {s:'Illinois',   o25:29, r25:2303, o26:47, r26:4350},
+  {s:'New York',   o25:35, r25:2282, o26:54, r26:4980},
+  {s:'New Jersey', o25:18, r25:1913, o26:29, r26:2680},
+  {s:'Colorado',   o25:21, r25:1900, o26:33, r26:3050},
+  {s:'Georgia',    o25:14, r25:1895, o26:22, r26:2030},
+  {s:'Michigan',   o25:20, r25:1790, o26:31, r26:2850},
+  {s:'Pennsylvania',o25:21,r25:1712, o26:33, r26:3040}
+];
+new Chart(document.getElementById('chGeo'), {
+  type:'bar',
+  data:{
+    labels:GEO.map(function(g){return g.s;}),
+    datasets:[
+      {label:'2025 Rev',data:GEO.map(function(g){return g.r25;}),backgroundColor:'rgba(156,163,175,.2)',borderColor:'#9ca3af',borderWidth:1,borderRadius:3},
+      {label:'2026 Rev',data:GEO.map(function(g){return g.r26;}),backgroundColor:'rgba(37,99,235,.2)',borderColor:'#2563eb',borderWidth:1.5,borderRadius:3}
+    ]
+  },
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',align:'end',labels:{boxWidth:8,padding:10,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw);}}}},scales:{x:{grid:{color:gL},ticks:{callback:function(v){return '$'+v/1000+'K';}}},y:{grid:{display:false},ticks:{font:{size:8}}}}}
+});
+GEO.forEach(function(g) {
+  var oPct = ((g.o26-g.o25)/g.o25*100).toFixed(0);
+  var rPct = ((g.r26-g.r25)/g.r25*100).toFixed(0);
+  document.getElementById('tGeoB').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + g.s + '</td>' +
+    '<td class="mn c3">' + g.o25 + '</td><td class="mn" style="font-weight:700">' + g.o26 + '</td>' +
+    '<td class="mn cg">+' + oPct + '%</td>' +
+    '<td class="mn cg" style="font-weight:700">' + f$(g.r26) + '</td>' +
+    '<td class="mn r cg">+' + rPct + '%</td></tr>';
+});
+
+// ── COLLECTIONS ────────────────────────────────────────────────────────────
+var CO = [
+  {n:'Crossbody Bags & Slings',s:6538,r:6008},
+  {n:'Star Wars',               s:6011,r:4168},
+  {n:'Shop All',                s:1479,r:3259},
+  {n:'Critical Role',           s:1312,r:3047},
+  {n:'Clearance Sale',          s:2462,r:1871},
+  {n:'Nomad Slings',            s:556, r:670},
+  {n:'Backpacks',               s:191, r:490},
+  {n:'Accessories / Bags',      s:1594,r:485}
+];
+new Chart(document.getElementById('chColl'), {
+  type:'bar',
+  data:{labels:CO.map(function(c){return c.n.length>20?c.n.substring(0,18)+'…':c.n;}),datasets:[{data:CO.map(function(c){return c.r;}),backgroundColor:['#2563eb','#dc2626','#059669','#7c3aed','#d97706','#0891b2','#db2777','#6b7280'],borderWidth:0,borderRadius:6}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw);}}}},scales:{x:{grid:{color:gL},ticks:{callback:function(v){return '$'+v/1000+'K';}}},y:{grid:{display:false},ticks:{font:{size:9}}}}}
+});
+CO.forEach(function(c) {
+  document.getElementById('tCollB').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + c.n + '</td>' +
+    '<td class="mn">' + c.s.toLocaleString() + '</td>' +
+    '<td class="mn cg" style="font-weight:700">' + f$(c.r) + '</td>' +
+    '<td class="mn r">$' + (c.r/c.s).toFixed(2) + '</td></tr>';
+});
+
+// ── CHANNELS ───────────────────────────────────────────────────────────────
+var CH = [
+  {n:'Paid Social',    s:31299,r:19900},
+  {n:'Cross-network',  s:19351,r:16059},
+  {n:'Unassigned',     s:31097,r:14919},
+  {n:'Paid Search',    s:5908, r:11103},
+  {n:'Direct',         s:25893,r:9890},
+  {n:'Email',          s:3661, r:9474},
+  {n:'Organic Search', s:4601, r:4358},
+  {n:'SMS',            s:1408, r:2628},
+  {n:'Referral',       s:2831, r:2167},
+  {n:'Organic Social', s:4967, r:1518}
+];
+new Chart(document.getElementById('chChannel'), {
+  type:'bar',
+  data:{labels:CH.map(function(c){return c.n;}),datasets:[{data:CH.map(function(c){return c.r;}),backgroundColor:['#7c3aed','#1877F2','#34A853','#9ca3af','#6b7280','#d97706','#2563eb','#0891b2','#db2777','#f59e0b'],borderWidth:0,borderRadius:4}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tp,callbacks:{label:function(c){return f$(c.raw);}}}},scales:{x:{grid:{display:false},ticks:{font:{size:7},maxRotation:45}},y:{grid:{color:gL},ticks:{callback:function(v){return '$'+v/1000+'K';}}}}}
+});
+CH.forEach(function(c) {
+  document.getElementById('tChannelB').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + c.n + '</td>' +
+    '<td class="mn">' + c.s.toLocaleString() + '</td>' +
+    '<td class="mn cg">' + f$(c.r) + '</td>' +
+    '<td class="mn r">—</td></tr>';
+});
+
+// ── INVENTORY ──────────────────────────────────────────────────────────────
+[
+  {n:'Mandalorian Nomad Sling',         av:264,cm:30,oos:'—',       st:'cg'},
+  {n:'Rebel Pilot Nomad Sling',         av:324,cm:10,oos:'—',       st:'cg'},
+  {n:'Imperial Nomad Sling',            av:349,cm:11,oos:'—',       st:'cg'},
+  {n:'Jedi Canvas Nomad Sling',         av:256,cm:6, oos:'—',       st:'cg'},
+  {n:'Xavier Institute Nomad Sling',    av:286,cm:1, oos:'—',       st:'cg'},
+  {n:'DC Batman Nomad Sling',           av:284,cm:3, oos:'—',       st:'cg'},
+  {n:'Jedi Order Convertible Backpack', av:70, cm:1, oos:'1 of 2',  st:'co'},
+  {n:'Rebel Pilot Trekker Backpack',    av:152,cm:3, oos:'—',       st:'cg'},
+  {n:'Rogue Squadron Bomber Jacket',    av:56, cm:2, oos:'10 of 14',st:'cr'},
+  {n:'Warriors of Mandalore Bomber',    av:18, cm:1, oos:'13 of 14',st:'cr'},
+  {n:'Bad Batch Bomber Jacket',         av:12, cm:1, oos:'12 of 14',st:'cr'},
+  {n:'Jedi Bomber Jacket',              av:11, cm:0, oos:'10 of 14',st:'cr'},
+  {n:'Secret Wars Hooded Bomber',       av:3,  cm:1, oos:'8 of 10', st:'cr'},
+  {n:'Silver Imperial Carry-On',        av:8,  cm:0, oos:'1 of 2',  st:'co'},
+  {n:'Storm Trooper Departer LE',       av:4,  cm:0, oos:'—',       st:'co'}
+].forEach(function(i) {
+  var sc = i.st==='cg'?'In Stock':i.st==='co'?'Low Stock':'Critical';
+  document.getElementById('tInvB').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + i.n + '</td>' +
+    '<td class="mn">' + i.av + '</td><td class="mn co">' + i.cm + '</td>' +
+    '<td class="mn">' + i.oos + '</td><td class="mn r ' + i.st + '">' + sc + '</td></tr>';
+});
+new Chart(document.getElementById('chStock'), {
+  type:'doughnut',
+  data:{labels:['In Stock','Low Stock (1-5)','Out of Stock'],datasets:[{data:[2194,4123,9848],backgroundColor:['rgba(5,150,105,.2)','rgba(217,119,6,.2)','rgba(220,38,38,.2)'],borderColor:['#059669','#d97706','#dc2626'],borderWidth:1.5}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{position:'bottom',labels:{padding:8,boxWidth:8,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp,callbacks:{label:function(c){return c.raw.toLocaleString()+' variants';}}}}}
+});
+
+// ── GSC KEYWORDS ───────────────────────────────────────────────────────────
+[
+  {q:'star wars shirts',   cl:18,imp:472, pos:8.2},
+  {q:'star wars merch',    cl:17,imp:526, pos:17.1},
+  {q:'daredevil merch',    cl:15,imp:103, pos:9.4},
+  {q:'spiderman hoodie',   cl:14,imp:874, pos:11.7},
+  {q:'star wars shirt',    cl:13,imp:622, pos:8.9},
+  {q:'star wars hoodie',   cl:13,imp:296, pos:8.3},
+  {q:'critical role merch',cl:13,imp:407, pos:13.3},
+  {q:'spiderman shirt',    cl:12,imp:1021,pos:6.6},
+  {q:'mtg backpack',       cl:11,imp:54,  pos:3.9},
+  {q:'star wars hat',      cl:10,imp:249, pos:7.6},
+  {q:'mighty nein merch',  cl:10,imp:61,  pos:2.7},
+  {q:'dnd shirts',         cl:10,imp:128, pos:4.6}
+].forEach(function(k) {
+  var pc = k.pos<=5?'cg':k.pos<=10?'co':'cr';
+  document.getElementById('tKeyB').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + k.q + '</td>' +
+    '<td class="mn">' + k.cl + '</td><td class="mn">' + k.imp.toLocaleString() + '</td>' +
+    '<td class="mn r ' + pc + '">' + k.pos.toFixed(1) + '</td></tr>';
+});
+
+// ── GSC WEEKLY TREND ───────────────────────────────────────────────────────
+var GSC = [
+  {w:'WK02',cl:2412,imp:174413,ctr:1.38},
+  {w:'WK03',cl:2352,imp:171160,ctr:1.37},
+  {w:'WK04',cl:2541,imp:167792,ctr:1.51},
+  {w:'WK05',cl:2318,imp:156762,ctr:1.48},
+  {w:'WK07',cl:1802,imp:134096,ctr:1.34},
+  {w:'WK08',cl:1759,imp:124669,ctr:1.41},
+  {w:'WK09',cl:1759,imp:124669,ctr:1.41}
+];
+new Chart(document.getElementById('chGSCTrend'), {
+  type:'bar',
+  data:{
+    labels:GSC.map(function(g){return g.w;}),
+    datasets:[
+      {label:'Impressions',data:GSC.map(function(g){return g.imp;}),backgroundColor:'rgba(66,133,244,.15)',borderColor:'#4285F4',borderWidth:1.5,borderRadius:4,yAxisID:'y'},
+      {label:'Clicks',data:GSC.map(function(g){return g.cl;}),type:'line',borderColor:'#059669',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#059669',pointBorderColor:'#fff',pointBorderWidth:2,yAxisID:'y1'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',align:'end',labels:{boxWidth:8,padding:10,usePointStyle:true,pointStyle:'circle',font:{size:9}}},tooltip:{...tp}},
+    scales:{x:{grid:{display:false}},y:{position:'left',grid:{color:gL},ticks:{callback:function(v){return (v/1000).toFixed(0)+'K';}}},y1:{position:'right',grid:{display:false}}}
+  }
+});
+GSC.forEach(function(g) {
+  document.getElementById('tGSCTrend').innerHTML +=
+    '<tr><td class="nm">' + g.w + '</td>' +
+    '<td class="mn">' + g.cl.toLocaleString() + '</td>' +
+    '<td class="mn">' + g.imp.toLocaleString() + '</td>' +
+    '<td class="mn">' + g.ctr + '%</td>' +
+    '<td class="mn r">' + Math.round(g.cl/7) + '/day</td></tr>';
+});
+
+// ── QUERY MOMENTUM ─────────────────────────────────────────────────────────
+[
+  {q:'star wars shirts',   c6:10,c7:18,p6:8.1, p7:8.2},
+  {q:'spiderman hoodie',   c6:13,c7:14,p6:6.2, p7:11.7},
+  {q:'critical role merch',c6:6, c7:13,p6:17.1,p7:13.3},
+  {q:'spiderman shirt',    c6:5, c7:12,p6:9.3, p7:6.6},
+  {q:'mtg backpack',       c6:11,c7:11,p6:4.1, p7:3.9},
+  {q:'star wars hat',      c6:4, c7:10,p6:10.2,p7:7.6},
+  {q:'mighty nein merch',  c6:3, c7:10,p6:4.2, p7:2.7}
+].forEach(function(q) {
+  var pct = ((q.c7-q.c6)/q.c6*100).toFixed(0);
+  var pc = q.p7<q.p6?'cg':q.p7>q.p6?'cr':'c3';
+  document.getElementById('tQRise').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + q.q + '</td>' +
+    '<td class="mn c3">' + q.c6 + '</td><td class="mn" style="font-weight:700">' + q.c7 + '</td>' +
+    '<td class="mn cg">+' + pct + '%</td>' +
+    '<td class="mn c3">' + q.p6 + '</td><td class="mn r ' + pc + '">' + q.p7 + '</td></tr>';
+});
+
+[
+  {q:'star wars merch',  c6:17,c7:17,p6:8.2,p7:17.1},
+  {q:'daredevil merch',  c6:13,c7:15,p6:9.9,p7:9.4},
+  {q:'star wars hoodie', c6:17,c7:13,p6:8.1,p7:8.3},
+  {q:'star wars shirt',  c6:9, c7:13,p6:9.1,p7:8.9},
+  {q:'star wars clothes',c6:11,c7:9, p6:8.8,p7:11.7},
+  {q:'dnd shirts',       c6:7, c7:10,p6:3.8,p7:4.6},
+  {q:'andor merch',      c6:8, c7:5, p6:4.3,p7:6.1}
+].forEach(function(q) {
+  var pct = ((q.c7-q.c6)/q.c6*100).toFixed(0);
+  var pc = q.p7<q.p6?'cg':q.p7>q.p6?'cr':'c3';
+  document.getElementById('tQDrop').innerHTML +=
+    '<tr><td class="nm" style="font-size:10px">' + q.q + '</td>' +
+    '<td class="mn c3">' + q.c6 + '</td><td class="mn" style="font-weight:700">' + q.c7 + '</td>' +
+    '<td class="mn cr">' + pct + '%</td>' +
+    '<td class="mn c3">' + q.p6 + '</td><td class="mn r ' + pc + '">' + q.p7 + '</td></tr>';
+});
+</script>
+</body>
+</html>
