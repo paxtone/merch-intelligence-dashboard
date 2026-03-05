@@ -1,0 +1,9 @@
+{
+  "weeks": [
+    {"number": 6, "label": "WK06", "start": "2026-02-02", "end": "2026-02-08", "date_range": "Feb 2 – Feb 8, 2026"},
+    {"number": 7, "label": "WK07", "start": "2026-02-09", "end": "2026-02-15", "date_range": "Feb 9 – Feb 15, 2026"},
+    {"number": 8, "label": "WK08", "start": "2026-02-16", "end": "2026-02-22", "date_range": "Feb 16 – Feb 22, 2026"},
+    {"number": 9, "label": "WK09", "start": "2026-02-23", "end": "2026-03-01", "date_range": "Feb 23 – Mar 1, 2026"}
+  ],
+  "current_week": 9
+}

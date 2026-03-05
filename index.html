@@ -71,6 +71,24 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font
 .kpi-d{font-size:10px;margin-top:4px;font-weight:600}
 .callout{background:linear-gradient(135deg,#f5f3ff,#fdf2f8);border:1px solid #e9d5ff;border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
 .callout-t{font-size:13px;font-weight:700;margin-bottom:4px}.callout-b{font-size:11px;color:var(--t2);line-height:1.6}
+.week-picker{position:relative;display:inline-flex;align-items:center}
+.week-picker-btn{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--sans);font-size:11px;color:var(--text);font-weight:600;transition:all .15s;user-select:none}
+.week-picker-btn:hover{border-color:var(--border-h);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.week-picker-btn.open{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-bg)}
+.week-picker-btn .wk-num{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--blue)}
+.week-picker-btn .chevron{font-size:8px;color:var(--t3);transition:transform .15s}
+.week-picker-btn.open .chevron{transform:rotate(180deg)}
+.week-picker-dd{position:absolute;top:calc(100% + 6px);right:0;width:300px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,.12);z-index:200;display:none;overflow:hidden}
+.week-picker-dd.show{display:block}
+.week-picker-dd-head{padding:10px 14px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);border-bottom:1px solid var(--elevated)}
+.week-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;font-size:12px;cursor:pointer;transition:background .1s;border-left:3px solid transparent}
+.week-item:hover{background:var(--hover)}
+.week-item.active{background:var(--blue-bg);border-left-color:var(--blue)}
+.week-item .wi-wk{font-family:var(--mono);font-weight:700;font-size:11px;min-width:42px}
+.week-item.active .wi-wk{color:var(--blue)}
+.week-item .wi-date{color:var(--t2);font-size:11px;flex:1;margin-left:8px}
+.week-item .wi-tag{font-size:8px;font-weight:700;padding:1px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.04em;background:var(--green-bg);color:var(--green)}
+.week-picker-date{font-size:11px;color:var(--t3);margin-left:8px}
 </style>
 </head>
 <body>
@@ -83,7 +101,17 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font
   </div>
   <div class="topbar-meta">
     <div class="live">LIVE DATA</div>
-    <span>WK09 · Feb 23 – Mar 1, 2026 (Sun–Sat)</span>
+    <div class="week-picker" id="weekPicker">
+      <button class="week-picker-btn" id="weekPickerBtn" onclick="toggleWeekPicker()">
+        <span class="wk-num" id="wpLabel">WK09</span>
+        <span class="chevron">&#9660;</span>
+      </button>
+      <span class="week-picker-date" id="wpDate">Feb 23 – Mar 1, 2026 (Sun–Sat)</span>
+      <div class="week-picker-dd" id="weekPickerDD">
+        <div class="week-picker-dd-head">Select Week</div>
+        <div id="weekList"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -100,7 +128,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);-webkit-font
 
 <!-- KPIs -->
 <div class="kpi-row">
-  <div class="kpi"><div class="kpi-l">WK09 Revenue</div><div class="kpi-v">$105,684</div><div class="kpi-d cg">▲ 69.6% YoY · vs $62,329</div></div>
+  <div class="kpi"><div class="kpi-l" id="kpiRevLabel">WK09 Revenue</div><div class="kpi-v">$105,684</div><div class="kpi-d cg">▲ 69.6% YoY · vs $62,329</div></div>
   <div class="kpi"><div class="kpi-l">Orders</div><div class="kpi-v">1,133</div><div class="kpi-d cg">▲ 56.3% YoY · vs 725</div></div>
   <div class="kpi"><div class="kpi-l">AOV</div><div class="kpi-v">$93.28</div><div class="kpi-d cg">▲ 8.5% YoY · vs $85.97</div></div>
   <div class="kpi"><div class="kpi-l">Units Sold</div><div class="kpi-v">1,995</div><div class="kpi-d c3">1.76 units/order</div></div>
@@ -456,9 +484,57 @@ const f$ = v => '$' + v.toLocaleString(undefined, {minimumFractionDigits:0, maxi
 const tp = {backgroundColor:'rgba(17,24,39,.92)',titleFont:{size:11,family:'DM Sans'},bodyFont:{size:11,family:'JetBrains Mono'},padding:10,cornerRadius:8,displayColors:false};
 const gL = 'rgba(0,0,0,.04)';
 
-fetch('data.json').then(r=>r.json()).then(function(D){
+// ── WEEK PICKER LOGIC ─────────────────────────────────────
+var _weekPickerOpen = false;
+function toggleWeekPicker() {
+  _weekPickerOpen = !_weekPickerOpen;
+  document.getElementById('weekPickerBtn').classList.toggle('open', _weekPickerOpen);
+  document.getElementById('weekPickerDD').classList.toggle('show', _weekPickerOpen);
+}
+function selectWeek(n) {
+  window.location.href = window.location.pathname + '?week=' + n;
+}
+document.addEventListener('click', function(e) {
+  if (_weekPickerOpen && !document.getElementById('weekPicker').contains(e.target)) {
+    _weekPickerOpen = false;
+    document.getElementById('weekPickerBtn').classList.remove('open');
+    document.getElementById('weekPickerDD').classList.remove('show');
+  }
+});
+function buildWeekPicker(manifest, activeWeek) {
+  var list = document.getElementById('weekList');
+  list.innerHTML = '';
+  var weeks = manifest.weeks.slice().sort(function(a,b){ return b.number - a.number; });
+  weeks.forEach(function(w) {
+    var div = document.createElement('div');
+    div.className = 'week-item' + (w.number === activeWeek ? ' active' : '');
+    div.innerHTML = '<span class="wi-wk">' + w.label + '</span>' +
+      '<span class="wi-date">' + w.date_range + '</span>' +
+      (w.number === manifest.current_week ? '<span class="wi-tag">Current</span>' : '');
+    if (w.number !== activeWeek) {
+      div.onclick = function(){ selectWeek(w.number); };
+    }
+    list.appendChild(div);
+  });
+}
+
+// ── DATA LOADING ──────────────────────────────────────────
+var params = new URLSearchParams(window.location.search);
+var requestedWeek = params.get('week') ? parseInt(params.get('week')) : null;
+
+fetch('data/manifest.json').then(function(r){ return r.json(); }).then(function(manifest) {
+  var wk = requestedWeek || manifest.current_week;
+  var dataFile = 'data/wk' + String(wk).padStart(2,'0') + '.json';
+  buildWeekPicker(manifest, wk);
+  return fetch(dataFile).then(function(r){ return r.json(); });
+}).then(function(D){
 // Update header with current week
-document.querySelector('.topbar-meta span:last-child').textContent = D.meta.week_label + ' · ' + D.meta.date_range + ' (Sun–Sat)';
+document.getElementById('wpLabel').textContent = D.meta.week_label;
+document.getElementById('wpDate').textContent = D.meta.date_range + ' (Sun–Sat)';
+document.title = 'Heroes & Villains — Merch Intelligence ' + D.meta.week_label;
+
+// Update KPI label
+document.getElementById('kpiRevLabel').textContent = D.meta.week_label + ' Revenue';
 
 // Update KPIs
 var kpis = document.querySelectorAll('.kpi');
