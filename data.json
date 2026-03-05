@@ -1,0 +1,346 @@
+{
+  "meta": {
+    "week_number": 9,
+    "week_label": "WK09",
+    "date_range": "Feb 23 – Mar 1, 2026",
+    "year": 2026,
+    "generated_at": "2026-03-05T16:00:00Z"
+  },
+  "kpis": {
+    "revenue": 105684,
+    "orders": 1133,
+    "aov": 93.28,
+    "units": 1995,
+    "units_per_order": 1.76,
+    "new_customers": 629,
+    "repeat_rate": 44.5,
+    "revenue_yoy_pct": 69.6,
+    "revenue_py": 62329,
+    "orders_yoy_pct": 56.3,
+    "orders_py": 725,
+    "aov_yoy_pct": 8.5,
+    "aov_py": 85.97,
+    "new_customers_yoy_pct": 75.7,
+    "new_customers_py": 358,
+    "repeat_rate_py": 36.8
+  },
+  "sell_through": [
+    {"name": "Mandalorian Nomad Sling", "inv": 367, "sold": 103, "avail": 264, "pct": 28.1},
+    {"name": "Imperial Nomad Sling", "inv": 421, "sold": 72, "avail": 349, "pct": 17.1},
+    {"name": "Jedi Canvas Nomad Sling", "inv": 297, "sold": 41, "avail": 256, "pct": 13.8},
+    {"name": "Rebel Pilot Nomad Sling", "inv": 373, "sold": 49, "avail": 324, "pct": 13.1},
+    {"name": "DC Batman Nomad Sling", "inv": 316, "sold": 32, "avail": 284, "pct": 10.1},
+    {"name": "Xavier Institute Nomad Sling", "inv": 291, "sold": 5, "avail": 286, "pct": 1.7}
+  ],
+  "attribution": [
+    {"channel": "Paid Social (Meta)", "revenue": 8929, "units": 125, "pct": 42.0},
+    {"channel": "Email / Klaviyo", "revenue": 5957, "units": 84, "pct": 28.0},
+    {"channel": "Direct", "revenue": 3829, "units": 54, "pct": 18.0},
+    {"channel": "Paid Search", "revenue": 1276, "units": 18, "pct": 6.0},
+    {"channel": "Organic Search", "revenue": 851, "units": 12, "pct": 4.0},
+    {"channel": "Other", "revenue": 434, "units": 4, "pct": 2.0}
+  ],
+  "cr_products": [
+    {"name": "Mighty Nein Slouchy Beanie", "units": 18, "revenue": 120},
+    {"name": "Toss Pattern Crew Sweat XL", "units": 17, "revenue": 336},
+    {"name": "Vox Machina Joggers L", "units": 16, "revenue": 342},
+    {"name": "Vox Machina Joggers XXL", "units": 16, "revenue": 345},
+    {"name": "Retro Zip Hoodie XL", "units": 15, "revenue": 421},
+    {"name": "Retro Zip Hoodie XXL", "units": 13, "revenue": 358},
+    {"name": "VM Merch Tee M", "units": 12, "revenue": 204},
+    {"name": "Bells Hells Hoodie L", "units": 10, "revenue": 280}
+  ],
+  "cr_attribution": [
+    {"channel": "Email / Klaviyo", "revenue": 2789, "units": 116, "pct": 40.0},
+    {"channel": "Paid Social (Meta)", "revenue": 2231, "units": 93, "pct": 32.0},
+    {"channel": "Direct", "revenue": 975, "units": 41, "pct": 14.0},
+    {"channel": "Organic Search", "revenue": 557, "units": 23, "pct": 8.0},
+    {"channel": "Other", "revenue": 419, "units": 16, "pct": 6.0}
+  ],
+  "campaign_launches": {
+    "nomad_sling": {
+      "launch_date": "Feb 10",
+      "revenue": 21276,
+      "units": 297,
+      "sell_through_pct": 16.5,
+      "rev_share_pct": 20.1,
+      "meta_spend": 714,
+      "meta_purchases": 39,
+      "meta_roas": 5.23,
+      "meta_cpa": 18.32
+    },
+    "critical_role": {
+      "launch_date": "Feb 11",
+      "revenue": 6971,
+      "units": 289,
+      "rev_share_pct": 6.6,
+      "meta_spend": 1876,
+      "meta_purchases": 102,
+      "meta_roas": 3.26,
+      "meta_cpa": 18.39
+    }
+  },
+  "daily_yoy": [
+    {"day": "Sun 2/23", "orders_2025": 88, "revenue_2025": 7534, "orders_2026": 116, "revenue_2026": 10426},
+    {"day": "Mon 2/24", "orders_2025": 99, "revenue_2025": 8601, "orders_2026": 140, "revenue_2026": 15225},
+    {"day": "Tue 2/25", "orders_2025": 105, "revenue_2025": 9213, "orders_2026": 140, "revenue_2026": 12485},
+    {"day": "Wed 2/26", "orders_2025": 118, "revenue_2025": 10156, "orders_2026": 210, "revenue_2026": 19759},
+    {"day": "Thu 2/27", "orders_2025": 112, "revenue_2025": 9738, "orders_2026": 166, "revenue_2026": 13619},
+    {"day": "Fri 2/28", "orders_2025": 101, "revenue_2025": 8628, "orders_2026": 181, "revenue_2026": 17885},
+    {"day": "Sat 3/1", "orders_2025": 102, "revenue_2025": 8459, "orders_2026": 180, "revenue_2026": 16285}
+  ],
+  "daily_2026": [
+    {"day": "Sun 2/23", "orders": 116, "revenue": 10426, "units": 199, "aov": 89.88},
+    {"day": "Mon 2/24", "orders": 140, "revenue": 15225, "units": 260, "aov": 108.75},
+    {"day": "Tue 2/25", "orders": 140, "revenue": 12485, "units": 241, "aov": 89.18},
+    {"day": "Wed 2/26", "orders": 210, "revenue": 19759, "units": 377, "aov": 94.09},
+    {"day": "Thu 2/27", "orders": 166, "revenue": 13619, "units": 275, "aov": 82.04},
+    {"day": "Fri 2/28", "orders": 181, "revenue": 17885, "units": 322, "aov": 98.81},
+    {"day": "Sat 3/1", "orders": 180, "revenue": 16285, "units": 321, "aov": 90.47}
+  ],
+  "weekly": [
+    {"week": "WK01", "orders": 993, "revenue": 80901, "aov": 81.47, "repeat_pct": 0, "sessions": 0},
+    {"week": "WK02", "orders": 883, "revenue": 73196, "aov": 82.89, "repeat_pct": 0, "sessions": 82774},
+    {"week": "WK03", "orders": 784, "revenue": 67995, "aov": 86.73, "repeat_pct": 0, "sessions": 72742},
+    {"week": "WK04", "orders": 856, "revenue": 82968, "aov": 96.93, "repeat_pct": 0, "sessions": 75647},
+    {"week": "WK05", "orders": 758, "revenue": 65940, "aov": 86.99, "repeat_pct": 0, "sessions": 82676},
+    {"week": "WK07", "orders": 947, "revenue": 88188, "aov": 93.12, "repeat_pct": 53.4, "sessions": 97454},
+    {"week": "WK08", "orders": 871, "revenue": 86153, "aov": 98.91, "repeat_pct": 0, "sessions": 0},
+    {"week": "WK09", "orders": 1133, "revenue": 105684, "aov": 93.28, "repeat_pct": 44.5, "sessions": 131400}
+  ],
+  "vendors": [
+    {"name": "Star Wars", "units": 1309, "revenue": 79048, "avg_price": 60.39, "orders": 778},
+    {"name": "Marvel", "units": 267, "revenue": 11640, "avg_price": 43.60, "orders": 189},
+    {"name": "Critical Role", "units": 289, "revenue": 6971, "avg_price": 24.12, "orders": 166},
+    {"name": "DC Comics", "units": 74, "revenue": 3552, "avg_price": 48.00, "orders": 60},
+    {"name": "D&D", "units": 24, "revenue": 779, "avg_price": 32.46, "orders": 23},
+    {"name": "Disney", "units": 14, "revenue": 656, "avg_price": 46.86, "orders": 12},
+    {"name": "Other", "units": 81, "revenue": 3038, "avg_price": 37.51, "orders": 54}
+  ],
+  "categories": [
+    {"name": "Slings", "units": 375, "revenue": 27033, "avg_price": 72.05},
+    {"name": "Tees", "units": 410, "revenue": 13677, "avg_price": 33.37},
+    {"name": "Backpacks", "units": 66, "revenue": 8957, "avg_price": 135.72},
+    {"name": "Jackets", "units": 86, "revenue": 8030, "avg_price": 93.37},
+    {"name": "Hoodies/Sweats", "units": 110, "revenue": 5404, "avg_price": 49.70},
+    {"name": "Luggage", "units": 20, "revenue": 4925, "avg_price": 246.25},
+    {"name": "Headwear", "units": 141, "revenue": 3585, "avg_price": 25.76},
+    {"name": "Other Bags", "units": 28, "revenue": 3458, "avg_price": 123.50},
+    {"name": "Accessories", "units": 64, "revenue": 2266, "avg_price": 35.41},
+    {"name": "Other", "units": 300, "revenue": 11407, "avg_price": 38.02}
+  ],
+  "products": [
+    {"name": "Mandalorian Nomad Sling", "vendor": "Star Wars", "units": 103, "revenue": 7501, "price": 75},
+    {"name": "Imperial Nomad Sling", "vendor": "Star Wars", "units": 72, "revenue": 4725, "price": 75},
+    {"name": "Rebel Pilot Nomad Sling", "vendor": "Star Wars", "units": 49, "revenue": 3225, "price": 75},
+    {"name": "Jedi Canvas Nomad Sling", "vendor": "Star Wars", "units": 41, "revenue": 2850, "price": 75},
+    {"name": "Scout Trooper Trekker Backpack", "vendor": "Star Wars", "units": 35, "revenue": 5250, "price": 150},
+    {"name": "DC Batman Nomad Sling", "vendor": "DC Comics", "units": 32, "revenue": 2175, "price": 75},
+    {"name": "74Z Speeder Bike Trucker Hat", "vendor": "Star Wars", "units": 31, "revenue": 930, "price": 30},
+    {"name": "Jedi Order Convertible Backpack", "vendor": "Star Wars", "units": 20, "revenue": 3000, "price": 150},
+    {"name": "Mighty Nein Slouchy Beanie", "vendor": "Critical Role", "units": 18, "revenue": 120, "price": 7},
+    {"name": "Toss Pattern Crew Sweatshirt", "vendor": "Critical Role", "units": 17, "revenue": 336, "price": 20},
+    {"name": "Rebel Knit Beanie", "vendor": "Star Wars", "units": 16, "revenue": 120, "price": 8},
+    {"name": "Vox Machina Joggers L", "vendor": "Critical Role", "units": 16, "revenue": 342, "price": 21},
+    {"name": "Vox Machina Joggers XXL", "vendor": "Critical Role", "units": 16, "revenue": 345, "price": 22},
+    {"name": "Vox Machina Retro Zip Hoodie XL", "vendor": "Critical Role", "units": 15, "revenue": 421, "price": 28},
+    {"name": "Jedi Master Wallet", "vendor": "Star Wars", "units": 14, "revenue": 476, "price": 34},
+    {"name": "Mudhorn Knit Beanie", "vendor": "Star Wars", "units": 14, "revenue": 60, "price": 4},
+    {"name": "Mythosaur Flex Fit Hat", "vendor": "Star Wars", "units": 13, "revenue": 325, "price": 25},
+    {"name": "Rebel Pilot Trekker Backpack", "vendor": "Star Wars", "units": 13, "revenue": 1950, "price": 150},
+    {"name": "Vox Machina Retro Zip Hoodie XXL", "vendor": "Critical Role", "units": 13, "revenue": 358, "price": 28},
+    {"name": "Empire Knit Beanie", "vendor": "Star Wars", "units": 12, "revenue": 150, "price": 13}
+  ],
+  "meta_campaigns": [
+    {"campaign": "All Bags", "spend": 2598, "purchases": 127, "roas": 5.00, "cpa": 20.45},
+    {"campaign": "Outerwear", "spend": 2279, "purchases": 70, "roas": 3.93, "cpa": 32.56},
+    {"campaign": "Product > $30", "spend": 1971, "purchases": 102, "roas": 3.89, "cpa": 19.32},
+    {"campaign": "Critical Role Feb", "spend": 1876, "purchases": 102, "roas": 3.26, "cpa": 18.39},
+    {"campaign": "Advantage+ All Bags", "spend": 1394, "purchases": 81, "roas": 6.37, "cpa": 17.22},
+    {"campaign": "Speeder Collections", "spend": 1324, "purchases": 62, "roas": 4.94, "cpa": 21.35},
+    {"campaign": "Shackets", "spend": 922, "purchases": 37, "roas": 5.18, "cpa": 24.92},
+    {"campaign": "Nomad Sling", "spend": 714, "purchases": 39, "roas": 5.23, "cpa": 18.32},
+    {"campaign": "Retarget 90d", "spend": 419, "purchases": 20, "roas": 4.42, "cpa": 20.96},
+    {"campaign": "Product > $50", "spend": 384, "purchases": 22, "roas": 7.78, "cpa": 17.48},
+    {"campaign": "Remarketing Hoodie+Beanie", "spend": 334, "purchases": 10, "roas": 2.25, "cpa": 33.35}
+  ],
+  "meta_totals": {"spend": 9309, "purchases": 474, "roas": 4.99, "cpa": 19.64, "purchase_value": 46475},
+  "google_campaigns": [
+    {"campaign": "Targeted [Search]", "spend": 2769, "conversions": 110.4, "cpa": 25.07, "clicks": 3380},
+    {"campaign": "Bags [Pmax]", "spend": 2743, "conversions": 58.3, "cpa": 47.03, "clicks": 5252},
+    {"campaign": "Sales & Offers [Pmax]", "spend": 2713, "conversions": 49.4, "cpa": 54.97, "clicks": 2425},
+    {"campaign": "Catch All Brands [Pmax]", "spend": 1886, "conversions": 51.4, "cpa": 36.73, "clicks": 3694},
+    {"campaign": "Accessories [Pmax]", "spend": 1806, "conversions": 27.1, "cpa": 66.70, "clicks": 3270},
+    {"campaign": "Star Wars [Pmax]", "spend": 1645, "conversions": 29.0, "cpa": 56.64, "clicks": 1881},
+    {"campaign": "Misc [Pmax]", "spend": 453, "conversions": 8.6, "cpa": 52.77, "clicks": 667},
+    {"campaign": "Shared Worlds [Pmax]", "spend": 215, "conversions": 7.5, "cpa": 28.92, "clicks": 387},
+    {"campaign": "Marvel [Pmax]", "spend": 202, "conversions": 2.1, "cpa": 97.32, "clicks": 853},
+    {"campaign": "New Drops [Pmax]", "spend": 97, "conversions": 1.0, "cpa": 95.35, "clicks": 163}
+  ],
+  "google_totals": {"spend": 13606, "conversions": 319, "cpa": 42.68, "clicks": 17112},
+  "total_ad_spend": 22915,
+  "paid_spend_trend": [
+    {"week": "WK02", "meta": 9134, "google": 9565, "meta_roas": 4.02, "meta_purchases": 454},
+    {"week": "WK03", "meta": 8450, "google": 15646, "meta_roas": 4.24, "meta_purchases": 407},
+    {"week": "WK04", "meta": 8508, "google": 17003, "meta_roas": 4.50, "meta_purchases": 381},
+    {"week": "WK05", "meta": 5913, "google": 14942, "meta_roas": 4.67, "meta_purchases": 313},
+    {"week": "WK07", "meta": 9310, "google": 13603, "meta_roas": 4.99, "meta_purchases": 474},
+    {"week": "WK08", "meta": 7401, "google": 12767, "meta_roas": 5.98, "meta_purchases": 408},
+    {"week": "WK09", "meta": 14621, "google": 14622, "meta_roas": 4.61, "meta_purchases": 695}
+  ],
+  "email": {
+    "sent": 306426,
+    "unique_opens": 207621,
+    "open_rate": 58.3,
+    "clicks": 4374,
+    "click_rate": 1.13,
+    "click_to_open_rate": 1.94,
+    "ga4_email_revenue": 5755,
+    "ga4_email_sessions": 3905,
+    "rev_per_session": 1.47,
+    "daily": [
+      {"day": "Sun", "sent": 1384, "clicked": 103},
+      {"day": "Mon", "sent": 183325, "clicked": 1525},
+      {"day": "Tue", "sent": 136991, "clicked": 1674},
+      {"day": "Wed", "sent": 2901, "clicked": 692},
+      {"day": "Thu", "sent": 130891, "clicked": 931},
+      {"day": "Fri", "sent": 1889, "clicked": 219},
+      {"day": "Sat", "sent": 85, "clicked": 42}
+    ],
+    "campaigns_sent": [
+      {"name": "02/10 — Nomad Slings Launch", "date": "Mon 2/10"},
+      {"name": "02/11 — Critical Role RMSG", "date": "Tue 2/11"},
+      {"name": "02/12 — UGC", "date": "Wed 2/12"}
+    ]
+  },
+  "segments": [
+    {"segment": "1st Order", "orders": 629, "revenue": 53150, "aov": 84.50},
+    {"segment": "2nd Order", "orders": 199, "revenue": 20000, "aov": 100.50},
+    {"segment": "3rd Order", "orders": 84, "revenue": 8217, "aov": 97.82},
+    {"segment": "4-5 Orders", "orders": 94, "revenue": 8893, "aov": 94.61},
+    {"segment": "6-10 Orders", "orders": 71, "revenue": 7696, "aov": 108.39},
+    {"segment": "11+ Orders", "orders": 55, "revenue": 7650, "aov": 139.09}
+  ],
+  "geographic": [
+    {"state": "California", "orders_2025": 140, "revenue_2025": 12426, "orders_2026": 218, "revenue_2026": 19540},
+    {"state": "Texas", "orders_2025": 58, "revenue_2025": 5052, "orders_2026": 95, "revenue_2026": 8750},
+    {"state": "Florida", "orders_2025": 52, "revenue_2025": 4427, "orders_2026": 84, "revenue_2026": 7620},
+    {"state": "Washington", "orders_2025": 31, "revenue_2025": 2888, "orders_2026": 52, "revenue_2026": 4820},
+    {"state": "Virginia", "orders_2025": 28, "revenue_2025": 2411, "orders_2026": 46, "revenue_2026": 4210},
+    {"state": "Illinois", "orders_2025": 29, "revenue_2025": 2303, "orders_2026": 47, "revenue_2026": 4350},
+    {"state": "New York", "orders_2025": 35, "revenue_2025": 2282, "orders_2026": 54, "revenue_2026": 4980},
+    {"state": "New Jersey", "orders_2025": 18, "revenue_2025": 1913, "orders_2026": 29, "revenue_2026": 2680},
+    {"state": "Colorado", "orders_2025": 21, "revenue_2025": 1900, "orders_2026": 33, "revenue_2026": 3050},
+    {"state": "Georgia", "orders_2025": 14, "revenue_2025": 1895, "orders_2026": 22, "revenue_2026": 2030},
+    {"state": "Michigan", "orders_2025": 20, "revenue_2025": 1790, "orders_2026": 31, "revenue_2026": 2850},
+    {"state": "Pennsylvania", "orders_2025": 21, "revenue_2025": 1712, "orders_2026": 33, "revenue_2026": 3040}
+  ],
+  "collections": [
+    {"name": "Crossbody Bags & Slings", "sessions": 6538, "revenue": 6008},
+    {"name": "Star Wars", "sessions": 6011, "revenue": 4168},
+    {"name": "Shop All", "sessions": 1479, "revenue": 3259},
+    {"name": "Critical Role", "sessions": 1312, "revenue": 3047},
+    {"name": "Clearance Sale", "sessions": 2462, "revenue": 1871},
+    {"name": "Nomad Slings", "sessions": 556, "revenue": 670},
+    {"name": "Backpacks", "sessions": 191, "revenue": 490},
+    {"name": "Accessories / Bags", "sessions": 1594, "revenue": 485}
+  ],
+  "channels": [
+    {"name": "Paid Social", "sessions": 31299, "revenue": 19900},
+    {"name": "Cross-network", "sessions": 19351, "revenue": 16059},
+    {"name": "Unassigned", "sessions": 31097, "revenue": 14919},
+    {"name": "Paid Search", "sessions": 5908, "revenue": 11103},
+    {"name": "Direct", "sessions": 25893, "revenue": 9890},
+    {"name": "Email", "sessions": 3661, "revenue": 9474},
+    {"name": "Organic Search", "sessions": 4601, "revenue": 4358},
+    {"name": "SMS", "sessions": 1408, "revenue": 2628},
+    {"name": "Referral", "sessions": 2831, "revenue": 2167},
+    {"name": "Organic Social", "sessions": 4967, "revenue": 1518}
+  ],
+  "inventory": {
+    "total_variants": 16165,
+    "on_hand": 798454,
+    "available": 798169,
+    "committed": 285,
+    "oos_variants": 9848,
+    "oos_pct": 60.9,
+    "low_stock": 4123,
+    "stock_distribution": [2194, 4123, 9848],
+    "top_sellers": [
+      {"name": "Mandalorian Nomad Sling", "available": 264, "committed": 30, "oos_sizes": "—", "status": "cg"},
+      {"name": "Rebel Pilot Nomad Sling", "available": 324, "committed": 10, "oos_sizes": "—", "status": "cg"},
+      {"name": "Imperial Nomad Sling", "available": 349, "committed": 11, "oos_sizes": "—", "status": "cg"},
+      {"name": "Jedi Canvas Nomad Sling", "available": 256, "committed": 6, "oos_sizes": "—", "status": "cg"},
+      {"name": "Xavier Institute Nomad Sling", "available": 286, "committed": 1, "oos_sizes": "—", "status": "cg"},
+      {"name": "DC Batman Nomad Sling", "available": 284, "committed": 3, "oos_sizes": "—", "status": "cg"},
+      {"name": "Jedi Order Convertible Backpack", "available": 70, "committed": 1, "oos_sizes": "1 of 2", "status": "co"},
+      {"name": "Rebel Pilot Trekker Backpack", "available": 152, "committed": 3, "oos_sizes": "—", "status": "cg"},
+      {"name": "Rogue Squadron Bomber Jacket", "available": 56, "committed": 2, "oos_sizes": "10 of 14", "status": "cr"},
+      {"name": "Warriors of Mandalore Bomber", "available": 18, "committed": 1, "oos_sizes": "13 of 14", "status": "cr"},
+      {"name": "Bad Batch Bomber Jacket", "available": 12, "committed": 1, "oos_sizes": "12 of 14", "status": "cr"},
+      {"name": "Jedi Bomber Jacket", "available": 11, "committed": 0, "oos_sizes": "10 of 14", "status": "cr"},
+      {"name": "Secret Wars Hooded Bomber", "available": 3, "committed": 1, "oos_sizes": "8 of 10", "status": "cr"},
+      {"name": "Silver Imperial Carry-On", "available": 8, "committed": 0, "oos_sizes": "1 of 2", "status": "co"},
+      {"name": "Storm Trooper Departer LE", "available": 4, "committed": 0, "oos_sizes": "—", "status": "co"}
+    ]
+  },
+  "gsc_keywords": [
+    {"query": "star wars shirts", "clicks": 18, "impressions": 472, "position": 8.2},
+    {"query": "star wars merch", "clicks": 17, "impressions": 526, "position": 17.1},
+    {"query": "daredevil merch", "clicks": 15, "impressions": 103, "position": 9.4},
+    {"query": "spiderman hoodie", "clicks": 14, "impressions": 874, "position": 11.7},
+    {"query": "star wars shirt", "clicks": 13, "impressions": 622, "position": 8.9},
+    {"query": "star wars hoodie", "clicks": 13, "impressions": 296, "position": 8.3},
+    {"query": "critical role merch", "clicks": 13, "impressions": 407, "position": 13.3},
+    {"query": "spiderman shirt", "clicks": 12, "impressions": 1021, "position": 6.6},
+    {"query": "mtg backpack", "clicks": 11, "impressions": 54, "position": 3.9},
+    {"query": "star wars hat", "clicks": 10, "impressions": 249, "position": 7.6},
+    {"query": "mighty nein merch", "clicks": 10, "impressions": 61, "position": 2.7},
+    {"query": "dnd shirts", "clicks": 10, "impressions": 128, "position": 4.6}
+  ],
+  "gsc_trend": [
+    {"week": "WK02", "clicks": 2412, "impressions": 174413, "ctr": 1.38},
+    {"week": "WK03", "clicks": 2352, "impressions": 171160, "ctr": 1.37},
+    {"week": "WK04", "clicks": 2541, "impressions": 167792, "ctr": 1.51},
+    {"week": "WK05", "clicks": 2318, "impressions": 156762, "ctr": 1.48},
+    {"week": "WK07", "clicks": 1802, "impressions": 134096, "ctr": 1.34},
+    {"week": "WK08", "clicks": 1759, "impressions": 124669, "ctr": 1.41},
+    {"week": "WK09", "clicks": 1759, "impressions": 124669, "ctr": 1.41}
+  ],
+  "query_momentum_rise": [
+    {"query": "star wars shirts", "clicks_prev": 10, "clicks_curr": 18, "pos_prev": 8.1, "pos_curr": 8.2},
+    {"query": "spiderman hoodie", "clicks_prev": 13, "clicks_curr": 14, "pos_prev": 6.2, "pos_curr": 11.7},
+    {"query": "critical role merch", "clicks_prev": 6, "clicks_curr": 13, "pos_prev": 17.1, "pos_curr": 13.3},
+    {"query": "spiderman shirt", "clicks_prev": 5, "clicks_curr": 12, "pos_prev": 9.3, "pos_curr": 6.6},
+    {"query": "mtg backpack", "clicks_prev": 11, "clicks_curr": 11, "pos_prev": 4.1, "pos_curr": 3.9},
+    {"query": "star wars hat", "clicks_prev": 4, "clicks_curr": 10, "pos_prev": 10.2, "pos_curr": 7.6},
+    {"query": "mighty nein merch", "clicks_prev": 3, "clicks_curr": 10, "pos_prev": 4.2, "pos_curr": 2.7}
+  ],
+  "query_momentum_drop": [
+    {"query": "star wars merch", "clicks_prev": 17, "clicks_curr": 17, "pos_prev": 8.2, "pos_curr": 17.1},
+    {"query": "daredevil merch", "clicks_prev": 13, "clicks_curr": 15, "pos_prev": 9.9, "pos_curr": 9.4},
+    {"query": "star wars hoodie", "clicks_prev": 17, "clicks_curr": 13, "pos_prev": 8.1, "pos_curr": 8.3},
+    {"query": "star wars shirt", "clicks_prev": 9, "clicks_curr": 13, "pos_prev": 9.1, "pos_curr": 8.9},
+    {"query": "star wars clothes", "clicks_prev": 11, "clicks_curr": 9, "pos_prev": 8.8, "pos_curr": 11.7},
+    {"query": "dnd shirts", "clicks_prev": 7, "clicks_curr": 10, "pos_prev": 3.8, "pos_curr": 4.6},
+    {"query": "andor merch", "clicks_prev": 8, "clicks_curr": 5, "pos_prev": 4.3, "pos_curr": 6.1}
+  ],
+  "callouts": {
+    "repeat_flywheel": {
+      "title": "Repeat Flywheel: 44.5% Repeat Rate \u00b7 504 Repeat Orders",
+      "body": "504 repeat orders drove 44.5% of WK09 volume. The explosive 2nd-order cohort (199 orders, up from 17 in 2025) signals the Nomad Sling launch is pulling new buyers back. Revenue hit $105.7K \u2014 highest weekly total of 2026."
+    },
+    "paid_media": {
+      "title": "Paid Media: Total Paid $29.2K \u00b7 Meta ROAS Dipped on Spend Ramp",
+      "body": "Meta spend nearly doubled to $14.6K (from $7.4K WK08), pushing ROAS down to 4.61x from 5.98x. All Bags ($2,598, 5.0x ROAS) and Advantage+ ($1,394, 6.37x) are top performers. Google at $14.6K with $42.40 CPA."
+    },
+    "seo": {
+      "title": "SEO: Impressions -28% Over 7 Weeks \u00b7 CTR Recovering",
+      "body": "Organic impressions declined to 125K (from 174K in WK02) but CTR recovered to 1.41%. \"Star wars shirts\" leads at 18 clicks. \"Spiderman shirt\" surging to pos 6.6. \"Star wars merch\" slipped to pos 17.1."
+    },
+    "star_wars": {
+      "title": "Star Wars = 74.8% Revenue \u00b7 $79K in One Week",
+      "body": "Star Wars: $79K of $106K (74.8%), 1,309 of 1,995 units (65.6%). Critical Role had a strong week at $7.0K (289 units). DC Batman Nomad Sling sold 32 units. Mandalorian Nomad Sling continues dominating at 103 units."
+    }
+  }
+}

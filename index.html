@@ -456,15 +456,28 @@ const f$ = v => '$' + v.toLocaleString(undefined, {minimumFractionDigits:0, maxi
 const tp = {backgroundColor:'rgba(17,24,39,.92)',titleFont:{size:11,family:'DM Sans'},bodyFont:{size:11,family:'JetBrains Mono'},padding:10,cornerRadius:8,displayColors:false};
 const gL = 'rgba(0,0,0,.04)';
 
+fetch('data.json').then(r=>r.json()).then(function(D){
+// Update header with current week
+document.querySelector('.topbar-meta span:last-child').textContent = D.meta.week_label + ' · ' + D.meta.date_range + ' (Sun–Sat)';
+
+// Update KPIs
+var kpis = document.querySelectorAll('.kpi');
+var k = D.kpis;
+kpis[0].querySelector('.kpi-v').textContent = f$(k.revenue);
+kpis[0].querySelector('.kpi-d').innerHTML = '▲ ' + k.revenue_yoy_pct + '% YoY · vs ' + f$(k.revenue_py);
+kpis[1].querySelector('.kpi-v').textContent = k.orders.toLocaleString();
+kpis[1].querySelector('.kpi-d').innerHTML = '▲ ' + k.orders_yoy_pct + '% YoY · vs ' + k.orders_py;
+kpis[2].querySelector('.kpi-v').textContent = '$' + k.aov.toFixed(2);
+kpis[2].querySelector('.kpi-d').innerHTML = '▲ ' + k.aov_yoy_pct + '% YoY · vs $' + k.aov_py;
+kpis[3].querySelector('.kpi-v').textContent = k.units.toLocaleString();
+kpis[3].querySelector('.kpi-d').textContent = k.units_per_order + ' units/order';
+kpis[4].querySelector('.kpi-v').textContent = k.new_customers.toLocaleString();
+kpis[4].querySelector('.kpi-d').innerHTML = '▲ ' + k.new_customers_yoy_pct + '% YoY · vs ' + k.new_customers_py;
+kpis[5].querySelector('.kpi-v').textContent = k.repeat_rate + '%';
+kpis[5].querySelector('.kpi-d').innerHTML = '▲ vs ' + k.repeat_rate_py + '% in 2025';
+
 // ── CAMPAIGN LAUNCH: NOMAD SLING SELL-THROUGH ──────────────────────────────
-var ST = [
-  {n:'Mandalorian Nomad Sling',  inv:367, sold:103, avail:264, pct:28.1},
-  {n:'Imperial Nomad Sling',     inv:421, sold:72,  avail:349, pct:17.1},
-  {n:'Jedi Canvas Nomad Sling',  inv:297, sold:41,  avail:256, pct:13.8},
-  {n:'Rebel Pilot Nomad Sling',  inv:373, sold:49,  avail:324, pct:13.1},
-  {n:'DC Batman Nomad Sling',    inv:316, sold:32,  avail:284, pct:10.1},
-  {n:'Xavier Institute Nomad Sling', inv:291, sold:5, avail:286, pct:1.7}
-];
+var ST = D.sell_through.map(function(s){return {n:s.name,inv:s.inv,sold:s.sold,avail:s.avail,pct:s.pct};});
 ST.forEach(function(p) {
   var c = p.pct >= 20 ? '#059669' : p.pct >= 10 ? '#d97706' : '#9ca3af';
   var sc = p.pct >= 20 ? 'cg' : p.pct >= 10 ? 'co' : 'c3';
@@ -483,14 +496,7 @@ ST.forEach(function(p) {
 });
 
 // ── NOMAD SLING ATTRIBUTION ────────────────────────────────────────────────
-var ATTR = [
-  {ch:'Paid Social (Meta)', r:8929, u:125, pct:42.0},
-  {ch:'Email / Klaviyo',    r:5957, u:84,  pct:28.0},
-  {ch:'Direct',             r:3829, u:54,  pct:18.0},
-  {ch:'Paid Search',        r:1276, u:18,  pct:6.0},
-  {ch:'Organic Search',     r:851,  u:12,  pct:4.0},
-  {ch:'Other',              r:434,  u:4,   pct:2.0}
-];
+var ATTR = D.attribution.map(function(a){return {ch:a.channel,r:a.revenue,u:a.units,pct:a.pct};});
 var attrColors = ['#1877F2','#c62828','#6b7280','#34A853','#4285F4','#9ca3af'];
 new Chart(document.getElementById('chCampAttr'), {
   type: 'doughnut',
@@ -533,16 +539,7 @@ ATTR.forEach(function(a, i) {
 });
 
 // ── CRITICAL ROLE TOP PRODUCTS ─────────────────────────────────────────────
-var CRP = [
-  {n:'Mighty Nein Slouchy Beanie',     u:18, r:120},
-  {n:'Toss Pattern Crew Sweat XL',     u:17, r:336},
-  {n:'Vox Machina Joggers L',          u:16, r:342},
-  {n:'Vox Machina Joggers XXL',        u:16, r:345},
-  {n:'Retro Zip Hoodie XL',            u:15, r:421},
-  {n:'Retro Zip Hoodie XXL',           u:13, r:358},
-  {n:'VM Merch Tee M',                 u:12, r:204},
-  {n:'Bells Hells Hoodie L',           u:10, r:280}
-];
+var CRP = D.cr_products.map(function(p){return {n:p.name,u:p.units,r:p.revenue};});
 new Chart(document.getElementById('chCRProd'), {
   type: 'bar',
   data: {
@@ -594,13 +591,7 @@ new Chart(document.getElementById('chCRProd'), {
 });
 
 // ── CRITICAL ROLE ATTRIBUTION ──────────────────────────────────────────────
-var CRATTR = [
-  {ch:'Email / Klaviyo',    r:2789, u:116, pct:40.0},
-  {ch:'Paid Social (Meta)', r:2231, u:93,  pct:32.0},
-  {ch:'Direct',             r:975,  u:41,  pct:14.0},
-  {ch:'Organic Search',     r:557,  u:23,  pct:8.0},
-  {ch:'Other',              r:419,  u:16,  pct:6.0}
-];
+var CRATTR = D.cr_attribution.map(function(a){return {ch:a.channel,r:a.revenue,u:a.units,pct:a.pct};});
 var crColors = ['#c62828','#1877F2','#6b7280','#4285F4','#9ca3af'];
 new Chart(document.getElementById('chCRAttr'), {
   type: 'bar',
@@ -642,15 +633,7 @@ CRATTR.forEach(function(a, i) {
 });
 
 // ── DAILY YoY ─────────────────────────────────────────────────────────────
-var DYoY = [
-  {d:'Sun 2/23',o25:88, r25:7534, o26:116,r26:10426},
-  {d:'Mon 2/24',o25:99, r25:8601, o26:140,r26:15225},
-  {d:'Tue 2/25',o25:105,r25:9213, o26:140,r26:12485},
-  {d:'Wed 2/26',o25:118,r25:10156,o26:210,r26:19759},
-  {d:'Thu 2/27',o25:112,r25:9738, o26:166,r26:13619},
-  {d:'Fri 2/28',o25:101,r25:8628, o26:181,r26:17885},
-  {d:'Sat 3/1', o25:102,r25:8459, o26:180,r26:16285}
-];
+var DYoY = D.daily_yoy.map(function(d){return {d:d.day,o25:d.orders_2025,r25:d.revenue_2025,o26:d.orders_2026,r26:d.revenue_2026};});
 new Chart(document.getElementById('chDailyYoY'), {
   type: 'bar',
   data: {
@@ -677,15 +660,7 @@ DYoY.forEach(function(d) {
 });
 
 // ── DAILY 2026 ─────────────────────────────────────────────────────────────
-var DAYS = [
-  {d:'Sun 2/23',o:116,r:10426,u:199,aov:89.88},
-  {d:'Mon 2/24',o:140,r:15225,u:260,aov:108.75},
-  {d:'Tue 2/25',o:140,r:12485,u:241,aov:89.18},
-  {d:'Wed 2/26',o:210,r:19759,u:377,aov:94.09},
-  {d:'Thu 2/27',o:166,r:13619,u:275,aov:82.04},
-  {d:'Fri 2/28',o:181,r:17885,u:322,aov:98.81},
-  {d:'Sat 3/1', o:180,r:16285,u:321,aov:90.47}
-];
+var DAYS = D.daily_2026.map(function(d){return {d:d.day,o:d.orders,r:d.revenue,u:d.units,aov:d.aov};});
 new Chart(document.getElementById('chDaily'), {
   type: 'bar',
   data: {
@@ -711,16 +686,7 @@ DAYS.forEach(function(d) {
 });
 
 // ── WEEKLY ─────────────────────────────────────────────────────────────────
-var WKS = [
-  {w:'WK01',o:993, r:80901,aov:81.47,rp:0,   s:0},
-  {w:'WK02',o:883, r:73196,aov:82.89,rp:0,   s:82774},
-  {w:'WK03',o:784, r:67995,aov:86.73,rp:0,   s:72742},
-  {w:'WK04',o:856, r:82968,aov:96.93,rp:0,   s:75647},
-  {w:'WK05',o:758, r:65940,aov:86.99,rp:0,   s:82676},
-  {w:'WK07',o:947, r:88188,aov:93.12,rp:53.4,s:97454},
-  {w:'WK08',o:871, r:86153,aov:98.91,rp:0,   s:0},
-  {w:'WK09',o:1133,r:105684,aov:93.28,rp:44.5,s:131400}
-];
+var WKS = D.weekly.map(function(w){return {w:w.week,o:w.orders,r:w.revenue,aov:w.aov,rp:w.repeat_pct,s:w.sessions};});
 new Chart(document.getElementById('chWeekly'), {
   type: 'bar',
   data: {
@@ -750,15 +716,7 @@ WKS.forEach(function(w,i,a) {
 });
 
 // ── VENDORS ────────────────────────────────────────────────────────────────
-var VN = [
-  {n:'Star Wars',    u:1309,r:79048,p:60.39,o:778},
-  {n:'Marvel',       u:267, r:11640,p:43.60,o:189},
-  {n:'Critical Role',u:289, r:6971, p:24.12,o:166},
-  {n:'DC Comics',    u:74,  r:3552, p:48.00,o:60},
-  {n:'D&D',          u:24,  r:779,  p:32.46,o:23},
-  {n:'Disney',       u:14,  r:656,  p:46.86,o:12},
-  {n:'Other',        u:81,  r:3038, p:37.51,o:54}
-];
+var VN = D.vendors.map(function(v){return {n:v.name,u:v.units,r:v.revenue,p:v.avg_price,o:v.orders};});
 var tVR = VN.reduce(function(a,v){return a+v.r;},0);
 new Chart(document.getElementById('chVendor'), {
   type:'bar',
@@ -774,18 +732,7 @@ VN.forEach(function(v) {
 });
 
 // ── CATEGORIES ─────────────────────────────────────────────────────────────
-var CA = [
-  {n:'Slings',          u:375,r:27033,p:72.05},
-  {n:'Tees',            u:410,r:13677,p:33.37},
-  {n:'Backpacks',       u:66, r:8957, p:135.72},
-  {n:'Jackets',         u:86, r:8030, p:93.37},
-  {n:'Hoodies/Sweats',  u:110,r:5404, p:49.70},
-  {n:'Luggage',         u:20, r:4925, p:246.25},
-  {n:'Headwear',        u:141,r:3585, p:25.76},
-  {n:'Other Bags',      u:28, r:3458, p:123.50},
-  {n:'Accessories',     u:64, r:2266, p:35.41},
-  {n:'Other',           u:300,r:11407,p:38.02}
-];
+var CA = D.categories.map(function(c){return {n:c.name,u:c.units,r:c.revenue,p:c.avg_price};});
 var tCU=CA.reduce(function(a,c){return a+c.u;},0);
 var tCR=CA.reduce(function(a,c){return a+c.r;},0);
 new Chart(document.getElementById('chCat'), {
@@ -802,28 +749,7 @@ CA.forEach(function(c) {
 });
 
 // ── TOP PRODUCTS ───────────────────────────────────────────────────────────
-var PR = [
-  {n:'Mandalorian Nomad Sling',       v:'Star Wars',    u:103,r:7501,p:75},
-  {n:'Imperial Nomad Sling',          v:'Star Wars',    u:72, r:4725,p:75},
-  {n:'Rebel Pilot Nomad Sling',       v:'Star Wars',    u:49, r:3225,p:75},
-  {n:'Jedi Canvas Nomad Sling',       v:'Star Wars',    u:41, r:2850,p:75},
-  {n:'Scout Trooper Trekker Backpack',v:'Star Wars',    u:35, r:5250,p:150},
-  {n:'DC Batman Nomad Sling',         v:'DC Comics',    u:32, r:2175,p:75},
-  {n:'74Z Speeder Bike Trucker Hat',  v:'Star Wars',    u:31, r:930, p:30},
-  {n:'Jedi Order Convertible Backpack',v:'Star Wars',   u:20, r:3000,p:150},
-  {n:'Mighty Nein Slouchy Beanie',    v:'Critical Role',u:18, r:120, p:7},
-  {n:'Toss Pattern Crew Sweatshirt',  v:'Critical Role',u:17, r:336, p:20},
-  {n:'Rebel Knit Beanie',             v:'Star Wars',    u:16, r:120, p:8},
-  {n:'Vox Machina Joggers L',         v:'Critical Role',u:16, r:342, p:21},
-  {n:'Vox Machina Joggers XXL',       v:'Critical Role',u:16, r:345, p:22},
-  {n:'Vox Machina Retro Zip Hoodie XL',v:'Critical Role',u:15,r:421, p:28},
-  {n:'Jedi Master Wallet',            v:'Star Wars',    u:14, r:476, p:34},
-  {n:'Mudhorn Knit Beanie',           v:'Star Wars',    u:14, r:60,  p:4},
-  {n:'Mythosaur Flex Fit Hat',        v:'Star Wars',    u:13, r:325, p:25},
-  {n:'Rebel Pilot Trekker Backpack',  v:'Star Wars',    u:13, r:1950,p:150},
-  {n:'Vox Machina Retro Zip Hoodie XXL',v:'Critical Role',u:13,r:358,p:28},
-  {n:'Empire Knit Beanie',            v:'Star Wars',    u:12, r:150, p:13}
-];
+var PR = D.products.map(function(p){return {n:p.name,v:p.vendor,u:p.units,r:p.revenue,p:p.price};});
 PR.forEach(function(p) {
   var vc = p.v==='Star Wars'?'cr':p.v==='Marvel'?'cbl':p.v==='DC Comics'?'cp':'c3';
   document.getElementById('tProdB').innerHTML +=
@@ -847,19 +773,7 @@ new Chart(document.getElementById('chProd'), {
 });
 
 // ── META CAMPAIGNS ─────────────────────────────────────────────────────────
-[
-  {c:'All Bags',                    s:2598,p:127,roas:5.00,cpa:20.45},
-  {c:'Outerwear',                   s:2279,p:70, roas:3.93,cpa:32.56},
-  {c:'Product > $30',               s:1971,p:102,roas:3.89,cpa:19.32},
-  {c:'Critical Role Feb',           s:1876,p:102,roas:3.26,cpa:18.39},
-  {c:'Advantage+ All Bags',         s:1394,p:81, roas:6.37,cpa:17.22},
-  {c:'Speeder Collections',         s:1324,p:62, roas:4.94,cpa:21.35},
-  {c:'Shackets',                    s:922, p:37, roas:5.18,cpa:24.92},
-  {c:'Nomad Sling',                 s:714, p:39, roas:5.23,cpa:18.32},
-  {c:'Retarget 90d',                s:419, p:20, roas:4.42,cpa:20.96},
-  {c:'Product > $50',               s:384, p:22, roas:7.78,cpa:17.48},
-  {c:'Remarketing Hoodie+Beanie',   s:334, p:10, roas:2.25,cpa:33.35}
-].forEach(function(m) {
+D.meta_campaigns.map(function(m){return {c:m.campaign,s:m.spend,p:m.purchases,roas:m.roas,cpa:m.cpa};}).forEach(function(m) {
   var rc = m.roas>=5?'cg':m.roas>=3?'co':'cr';
   var cc = m.cpa<=20?'cg':m.cpa<=25?'co':'cr';
   document.getElementById('tMetaB').innerHTML +=
@@ -869,18 +783,7 @@ new Chart(document.getElementById('chProd'), {
 });
 
 // ── GOOGLE CAMPAIGNS ───────────────────────────────────────────────────────
-[
-  {c:'Targeted [Search]',      s:2769,cv:110.4,cpa:25.07,cl:3380},
-  {c:'Bags [Pmax]',            s:2743,cv:58.3, cpa:47.03,cl:5252},
-  {c:'Sales & Offers [Pmax]',  s:2713,cv:49.4, cpa:54.97,cl:2425},
-  {c:'Catch All Brands [Pmax]',s:1886,cv:51.4, cpa:36.73,cl:3694},
-  {c:'Accessories [Pmax]',     s:1806,cv:27.1, cpa:66.70,cl:3270},
-  {c:'Star Wars [Pmax]',       s:1645,cv:29.0, cpa:56.64,cl:1881},
-  {c:'Misc [Pmax]',            s:453, cv:8.6,  cpa:52.77,cl:667},
-  {c:'Shared Worlds [Pmax]',   s:215, cv:7.5,  cpa:28.92,cl:387},
-  {c:'Marvel [Pmax]',          s:202, cv:2.1,  cpa:97.32,cl:853},
-  {c:'New Drops [Pmax]',       s:97,  cv:1.0,  cpa:95.35,cl:163}
-].forEach(function(g) {
+D.google_campaigns.map(function(g){return {c:g.campaign,s:g.spend,cv:g.conversions,cpa:g.cpa,cl:g.clicks};}).forEach(function(g) {
   var cc = g.cpa<=40?'cg':g.cpa<=60?'co':'cr';
   document.getElementById('tGoogleB').innerHTML +=
     '<tr><td class="nm" style="font-size:10px">' + g.c + '</td><td class="mn">' + f$(g.s) + '</td>' +
